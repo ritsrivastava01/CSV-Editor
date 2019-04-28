@@ -1,6 +1,7 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+const shell = require('electron').shell;
 
 let win, serve;
 const args = process.argv.slice(1);
@@ -46,6 +47,36 @@ function createWindow() {
     // when you should delete the corresponding element.
     win = null;
   });
+
+  //createMenu();
+}
+
+function createMenu() {
+
+  // Other code removed for brevity
+
+  const menu = Menu.buildFromTemplate([
+    {
+      label: 'Menu',
+      submenu: [
+        { label: 'Upload CSV', accelerator: 'CmdOrCtrl+Shift+U' },
+        { label: 'Save All', accelerator: 'CmdOrCtrl+Shift+S' },
+        { label: 'Save', accelerator: 'CmdOrCtrl+S' },
+        { type: 'separator' },
+        {
+          label: 'Exit', accelerator: 'Esc', click() {
+            app.quit();
+          }
+        },
+        {
+          label: 'GitHub', click() {
+            shell.openExternal('http://google.com');
+          },
+        },
+      ]
+    }
+  ]);
+  Menu.setApplicationMenu(menu);
 
 }
 

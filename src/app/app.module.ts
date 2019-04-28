@@ -23,9 +23,12 @@ import { MatTableModule,
          MatInputModule,
          MatDatepickerModule,
          MatNativeDateModule,
-         MatTabsModule  } from '@angular/material';
-import { ReactiveFormsModule} from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+         MatTabsModule,
+         MatToolbarModule,
+         MatButtonModule } from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';         
+import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -36,7 +39,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    WebviewDirective
+    WebviewDirective,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -46,9 +50,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     ReactiveFormsModule,
     MatTableModule,
-    NgbModule,
     MatInputModule,
+    MatToolbarModule,
     MatDatepickerModule,
+    MatButtonModule,
+    DragDropModule,
     MatTabsModule,
     MatNativeDateModule,
     TranslateModule.forRoot({

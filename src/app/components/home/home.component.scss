@@ -5,6 +5,18 @@
     margin:0;
     padding:50px 20px;
   }
+
+  .box {
+    background-color: blue;
+    color:white;
+    text-align: center;
+    width:300px;
+    height:300px;
+}
+.box-drag-over{
+  background-color: grey;
+}
+
   // /deep/.mat-tab-label{
   //   min-width: 0!important;
   //   padding: 3px!important;

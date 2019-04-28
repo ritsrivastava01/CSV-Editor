@@ -2,7 +2,10 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Observer, Observable, of } from 'rxjs';
 import { ElectronService } from '../../providers/electron.service';
 import { MatTableDataSource, MatTabChangeEvent } from '@angular/material';
+import * as path from 'path';
+const remote = require('electron').remote;
 const { dialog } = require('electron').remote;
+const { Menu, MenuItem } = remote.require('electron');
 const csv = require('csv-parser');
 
 
@@ -18,7 +21,8 @@ export class HomeComponent implements OnInit {
   dataSource;
   tableArr = [];
   displayedColumns = [];
-  tabGroup:Array<ITabGroup> = [];
+  tabGroup: Array<ITabGroup> = [];
+  menu = new Menu();
   /**
        * Pre-defined columns list for user table
        */
@@ -33,7 +37,9 @@ export class HomeComponent implements OnInit {
     this.dateFiledSet.add('Datum afsluiten agreement');
     this.dateFiledSet.add('Inactivatie datum -optioneel-');
 
-    this.showDialog();
+    // this.showDialog();
+    this.createMenu();
+    this.fileDropped();
 
   }
 
@@ -48,8 +54,9 @@ export class HomeComponent implements OnInit {
       this.tabGroup = filePaths.map(x => {
         return <ITabGroup>{
           fileName: x.replace(/^.*[\\\/]/, ''),
-          filePath:x
-      }});
+          filePath: x
+        };
+      });
       console.log(this.tabGroup);
       this.loadDataFromCSV(filePaths[0]);
     });
@@ -57,7 +64,7 @@ export class HomeComponent implements OnInit {
 
   tabChanged(tabChange: MatTabChangeEvent) {
     if (tabChange !== undefined) {
-      let file:ITabGroup = this.tabGroup[tabChange.index];
+      let file: ITabGroup = this.tabGroup[tabChange.index];
       this.loadDataFromCSV(file.filePath);
       console.log(tabChange);
     }
@@ -69,11 +76,11 @@ export class HomeComponent implements OnInit {
   }
 
   loadDataFromCSV = (filePath) => {
-    this.tableArr =[];
-    this.values=[];
-    this.headers=[];
-    this.columnNames=[];
-    this.displayedColumns =[];
+    this.tableArr = [];
+    this.values = [];
+    this.headers = [];
+    this.columnNames = [];
+    this.displayedColumns = [];
     this.electronService.fs.createReadStream(filePath)
       .pipe(csv({ separator: ';' }))
       .on('data', (data) => {
@@ -101,7 +108,69 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  fileDropped = () => {
+    const holder = document.getElementById('drag-file');
+    holder.ondragover = (e: any) => {
+      e.target.classList.add('box-drag-over');
+      return false;
+    };
+
+    holder.ondragleave = (e: any) => {
+      e.target.classList.remove('box-drag-over');
+      return false;
+    };
+
+    // holder.addEventListener('dragenter', function(event) {
+    //     event.target.style.border = '3px dotted red';
+    // });
+
+    holder.ondragend = () => {
+      return false;
+    };
+
+    holder.ondrop = (e: any) => {
+      e.preventDefault();
+      const fileList: File[] = Array.from(e.dataTransfer.files);
+      this.tabGroup = fileList.filter((x: File) => path.extname(x.path) === '.csv').map((y: File) => {
+        return <ITabGroup>{
+          fileName: y.name,
+          filePath: y.path
+        };
+      });
+      console.log(this.tabGroup);
+      this.loadDataFromCSV(this.tabGroup[0].filePath);
+      return false;
+    };
+  }
+
+  createMenu = () => {
+
+    // Build menu one item at a time, unlike
+    this.menu.append(new MenuItem({
+      label: 'Save File',
+      click() {
+        console.log('item 1 clicked');
+      }
+    }));
+
+    this.menu.append(new MenuItem({ type: 'separator' }));
+    this.menu.append(new MenuItem({
+      label: 'Reload',
+      click() {
+        console.log('item 3 clicked');
+      }
+    }));
+
+    // Prevent default action of right click in chromium. Replace with our menu.
+    window.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      this.menu.popup(this.electronService.remote.getCurrentWindow());
+    }, false);
+  }
+
 }
+
+
 
 export interface ITabGroup {
   fileName: string;
