@@ -8,38 +8,41 @@
     <div class="divTableCell" *ngFor="let val of item">{{val}}</div>
  </div>
 </div>
-   -->
+ 
    <input class="example-full-width" [matDatepicker]="test" [attr.id]="dtPicker + test" placeholder="" value="">         
    <mat-datepicker-toggle matSuffix [for]="test"></mat-datepicker-toggle>
    <mat-datepicker #test></mat-datepicker>
-   
-   
-<mat-table #table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames" >
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}} </mat-header-cell>
-     
-       
-            <mat-cell *matCellDef="let element"  >
-                <ng-container  *ngIf="showDateField(column.value)">
-                <input  class="example-full-width" type="date"  placeholder="" value="{{element[column.id]}}">                  
-              </ng-container>
-              <ng-container  *ngIf="!showDateField(column.value)">
-                  <input  class="example-full-width"   placeholder="" value="{{element[column.id]}}">                  
-                </ng-container>
+   -->
 
-              </mat-cell>
-            
-            <!-- <ng-container *ngIf="{{column.value}} != 'Agreement datum'">
-              <mat-cell *matCellDef="let element"   >
-                  <input  class="example-full-width" type="date"  placeholder="" value="{{element[column.id]}}">                  
-                  
-                </mat-cell>
-       
-              </ng-container> -->
-    </ng-container>
-    {{columnNames | json}}
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-  </mat-table>
+
+
+   <mat-tab-group (selectedTabChange)="tabChanged($event)" (click)="tabChanged()">
+      <mat-tab label="{{tab.fileName}}" *ngFor="let tab of tabGroup"> 
+          {{tab.fileName}}
+          <ng-template matTabContent>
+          <mat-table #table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}} </mat-header-cell>
+               
+                 
+                      <mat-cell *matCellDef="let element"  >
+                          <ng-container  *ngIf="showDateField(column.value)">
+                          <input  class="example-full-width" type="date"  placeholder="" value="{{element[column.id]}}">                  
+                        </ng-container>
+                        <ng-container  *ngIf="!showDateField(column.value)">
+                            <input  class="example-full-width"   placeholder="" value="{{element[column.id]}}">                  
+                          </ng-container>
+          
+                        </mat-cell>
+                
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+
+
 
   

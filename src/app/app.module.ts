@@ -22,8 +22,10 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatTableModule,
          MatInputModule,
          MatDatepickerModule,
-         MatNativeDateModule  } from '@angular/material';
+         MatNativeDateModule,
+         MatTabsModule  } from '@angular/material';
 import { ReactiveFormsModule} from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -44,8 +46,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppRoutingModule,
     ReactiveFormsModule,
     MatTableModule,
+    NgbModule,
     MatInputModule,
     MatDatepickerModule,
+    MatTabsModule,
     MatNativeDateModule,
     TranslateModule.forRoot({
       loader: {
