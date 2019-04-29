@@ -6,6 +6,23 @@
     padding:50px 20px;
   }
 
+  .box {
+    background-color: blue;
+    color:white;
+    text-align: center;
+    width:300px;
+    height:300px;
+}
+.box-drag-over{
+  background-color: grey;
+}
+
+  // /deep/.mat-tab-label{
+  //   min-width: 0!important;
+  //   padding: 3px!important;
+  //   margin: 3px!important;
+  //   max-width:200px !important;
+  //  }
  
   .example-full-width{
       width: 150px;

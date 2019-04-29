@@ -22,8 +22,13 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { MatTableModule,
          MatInputModule,
          MatDatepickerModule,
-         MatNativeDateModule  } from '@angular/material';
-import { ReactiveFormsModule} from '@angular/forms';
+         MatNativeDateModule,
+         MatTabsModule,
+         MatToolbarModule,
+         MatButtonModule } from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';         
+import { ReactiveFormsModule } from '@angular/forms';
+import { HeaderComponent } from './components/header/header.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -34,7 +39,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     HomeComponent,
-    WebviewDirective
+    WebviewDirective,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +51,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     MatTableModule,
     MatInputModule,
+    MatToolbarModule,
     MatDatepickerModule,
+    MatButtonModule,
+    DragDropModule,
+    MatTabsModule,
     MatNativeDateModule,
     TranslateModule.forRoot({
       loader: {
