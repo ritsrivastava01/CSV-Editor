@@ -24,7 +24,7 @@
                 <input  class="example-full-width" type="date"  placeholder="" value="{{element[column.id]}}">                  
               </ng-container>
               <ng-container  *ngIf="!showDateField(column.value)">
-                  <input  class="example-full-width"   placeholder="" value="{{element[column.id]}}">                  
+                  <input  class="example-full-width" [(ngModel)]="element[column.id]"   placeholder="" value="{{element[column.id]}}">                  
                 </ng-container>
 
               </mat-cell>

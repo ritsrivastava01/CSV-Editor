@@ -4,7 +4,7 @@ import { ElectronService } from '../../providers/electron.service';
 import { MatTableDataSource } from '@angular/material';
 const { dialog } = require('electron').remote;
 const csv = require('csv-parser');
-
+const { app, globalShortcut } = require('electron');
 
 @Component({
   selector: 'app-home',
@@ -18,6 +18,7 @@ export class HomeComponent implements OnInit {
   dataSource;
   tableArr = [];
   displayedColumns = [];
+  fileName: string;
 
   /**
        * Pre-defined columns list for user table
@@ -35,6 +36,9 @@ export class HomeComponent implements OnInit {
 
     this.showDialog();
 
+    this.electronService.ipcRenderer.on('saveFile', (arg) => {
+      this.saveFile();
+    });
   }
 
   showDialog = () => {
@@ -45,6 +49,12 @@ export class HomeComponent implements OnInit {
         { name: 'Custom File Type', extensions: ['csv'] }]
     }, (fileNames) => {
       console.log(fileNames);
+      this.fileName = fileNames !== undefined ? fileNames[0] : undefined;
+
+      if (!this.fileName) {
+        alert('Please selcted file');
+        return;
+      }
       this.electronService.fs.createReadStream(fileNames[0])
         .pipe(csv())
         .on('data', (data) => {
@@ -72,8 +82,21 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  showDateField = (filedName): boolean => {
-    return this.dateFiledSet.has(filedName);
+
+  showDateField = (filedName): boolean => this.dateFiledSet.has(filedName);
+
+  saveFile = () => {
+    this.electronService.fs.writeFile(this.fileName, this.dataSource.data, (err) => {
+      if (err) {
+          alert('An error ocurred updating the file' + err.message);
+          console.log(err);
+          return;
+      }
+      alert('The file has been succesfully saved');
+  });
+  }
+  updateValue = (event: any) => {
+    console.log('aa');
   }
 
 }
