@@ -44,13 +44,18 @@ export class HomeComponent implements OnInit {
   }
 
   showDialog = () => {
-    //this.tabGroup= ['tab1','tab3','tab3'];
+    // this.tabGroup= ['tab1','tab3','tab3'];
     dialog.showOpenDialog({
       title: 'Select file',
       properties: ['openFile', 'multiSelections'],
       filters: [
         { name: 'Custom File Type', extensions: ['csv'] }]
     }, (filePaths) => {
+
+      if (filePaths) {
+        alert('Please selcted file');
+        return;
+      }
       this.tabGroup = filePaths.map(x => {
         return <ITabGroup>{
           fileName: x.replace(/^.*[\\\/]/, ''),
@@ -64,7 +69,7 @@ export class HomeComponent implements OnInit {
 
   tabChanged(tabChange: MatTabChangeEvent) {
     if (tabChange !== undefined) {
-      let file: ITabGroup = this.tabGroup[tabChange.index];
+      const file: ITabGroup = this.tabGroup[tabChange.index];
       this.loadDataFromCSV(file.filePath);
       console.log(tabChange);
     }
@@ -88,7 +93,7 @@ export class HomeComponent implements OnInit {
         this.tableArr.push(data);
       })
       .on('headers', (data) => {
-        this.headers = data;// data.toString().split(',');
+        this.headers = data; // data.toString().split(',');
         this.headers = this.headers.filter(function (el) {
           return el !== '';
         });
@@ -106,6 +111,17 @@ export class HomeComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
 
       });
+  }
+
+  saveFile = () => {
+    this.electronService.fs.writeFile(this.tabGroup[0].filePath, this.dataSource.data, (err) => {
+      if (err) {
+          alert('An error ocurred updating the file' + err.message);
+          console.log(err);
+          return;
+      }
+      alert('The file has been succesfully saved');
+  });
   }
 
   fileDropped = () => {
@@ -176,4 +192,3 @@ export interface ITabGroup {
   fileName: string;
   filePath: string;
 }
-

@@ -1,10 +1,11 @@
-import { app, BrowserWindow, screen, Menu } from 'electron';
+import { app, BrowserWindow, screen, Menu, globalShortcut  } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 const shell = require('electron').shell;
 
 let win, serve;
 const args = process.argv.slice(1);
+
 serve = args.some(val => val === '--serve');
 
 function createWindow() {
@@ -12,17 +13,22 @@ function createWindow() {
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
+    globalShortcut.register('CommandOrControl+S', () => {
+      win.webContents.send('saveFile', 'save-file');
+    });
+
+
   // Create the browser window.
   win = new BrowserWindow({
     x: 0,
     y: 0,
     width: size.width - 200,
     height: size.height - 200,
+    icon: __dirname + 'assets/icons/win/64x64.png',
     webPreferences: {
       nodeIntegration: true,
     },
   });
-
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
