@@ -86,7 +86,9 @@
     "@angular/material": "^7.3.7",
     "@ng-bootstrap/ng-bootstrap": "^4.1.1",
     "csv-parser": "^2.2.0",
+    "csvtojson": "^2.0.8",
     "hammerjs": "^2.0.8",
-    "npm": "^6.9.0"
+    "npm": "^6.9.0",
+    "papaparse": "^4.6.3"
   }
 }

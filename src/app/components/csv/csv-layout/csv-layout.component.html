@@ -1,0 +1,38 @@
+
+<div class="box" id="drag-file">
+  Drop your files here!
+</div>
+<mat-tab-group (selectedTabChange)="tabChanged($event)" (click)="tabChanged()">
+  <mat-tab label="{{tab.fileName}}" *ngFor="let tab of tabGroup">
+    {{tab.fileName}}
+    <ng-template matTabContent>
+      <mat-table #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> {{column.value}} </mat-header-cell>
+
+
+          <mat-cell *matCellDef="let element">
+            <ng-container *ngIf="showDateField(column.value)">
+              <input class="example-full-width" placeholder="dd-mm-yyyy" [(ngModel)]="element[column.id]"
+              onkeyup="
+              var v = this.value;
+              if (v.match(/^\d{2}$/) !== null) {
+                  this.value = v + '-';
+              } else if (v.match(/^\d{2}\-\d{2}$/) !== null) {
+                  this.value = v + '-';
+              }" maxlength="10">
+            </ng-container>
+            <ng-container *ngIf="!showDateField(column.value)">
+              <input class="example-full-width" placeholder="" [(ngModel)]="element[column.id]"
+                value="{{element[column.id]}}">
+            </ng-container>
+
+          </mat-cell>
+
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

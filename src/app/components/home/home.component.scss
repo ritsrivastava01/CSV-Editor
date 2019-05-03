@@ -1,3 +1,7 @@
+:host{
+  display: block;
+  height: 100%;
+
 .container {
   height: 100%;
   .title {
@@ -5,70 +9,29 @@
     margin:0;
     padding:50px 20px;
   }
-
-  .box {
-    background-color: blue;
-    color:white;
-    text-align: center;
-    width:300px;
-    height:300px;
+  .app-container{
+    height: 91.5%;
+    display: block;
+    padding-top:56px ;
 }
-.box-drag-over{
-  background-color: grey;
+.example-container {
+  width: 100%;
+    height: 100%;
 }
 
-  // /deep/.mat-tab-label{
-  //   min-width: 0!important;
-  //   padding: 3px!important;
-  //   margin: 3px!important;
-  //   max-width:200px !important;
-  //  }
+.example-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-size: 100% ;
+  background-image: url('../../../assets/images/bg.jpg')
+}
+
+.example-sidenav {
+  padding: 20px;
+  width: 30%;
+}
+  }
+}
  
-  .example-full-width{
-      width: 150px;
-      border: 1px solid #bbb4af;
-      border-radius: 4px;
-      box-shadow: inset 0 2px 3px 0 rgba(0,0,0,.06);
-      height: 32px;
-    padding: 0 12px;
-      
-  }
-  .mat-header-cell, .mat-cell {
-    border-bottom: .5px solid rgba(0,0,0,.54);
-    min-width: 200px;
-}
-
-  .divTable{
-    display: table;
-    width: 100%;
-
-  .divTableRow {
-    display: table-row;
-  }
-  .divTableHeading {
-    background-color: #EEE;
-    display: table-header-group;
-  }
-  .divTableCell, .divTableHead {
-    border-bottom: .5px solid rgba(0,0,0,.54);
-    
-    display: table-cell;
-    padding: 3px 10px;
-    min-width: 100px;
-
-  }
-  .divTableHeading {
-    background-color: #EEE;
-    display: table-header-group;
-    font-weight: bold;
-  }
-  .divTableFoot {
-    background-color: #EEE;
-    display: table-footer-group;
-    font-weight: bold;
-  }
-  .divTableBody {
-    display: table-row-group;
-  }
-}
-}

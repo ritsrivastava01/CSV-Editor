@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  margin-top: 30px;
+  
+  .box {
+    background-color: blue;
+    color: white;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+  }
+  .box-drag-over {
+    background-color: grey;
+  }
+
+  // /deep/.mat-tab-label{
+  //   min-width: 0!important;
+  //   padding: 3px!important;
+  //   margin: 3px!important;
+  //   max-width:200px !important;
+  //  }
+
+  .example-full-width {
+    width: 150px;
+    border: 1px solid #bbb4af;
+    border-radius: 4px;
+    box-shadow: inset 0 2px 3px 0 rgba(0, 0, 0, 0.06);
+    height: 32px;
+    padding: 0 12px;
+  }
+  .mat-header-cell,
+  .mat-cell {
+    border-bottom: 0.5px solid rgba(0, 0, 0, 0.54);
+    min-width: 200px;
+  }
+
+  .divTable {
+    display: table;
+    width: 100%;
+
+    .divTableRow {
+      display: table-row;
+    }
+    .divTableHeading {
+      background-color: #eee;
+      display: table-header-group;
+    }
+    .divTableCell,
+    .divTableHead {
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.54);
+
+      display: table-cell;
+      padding: 3px 10px;
+      min-width: 100px;
+    }
+    .divTableHeading {
+      background-color: #eee;
+      display: table-header-group;
+      font-weight: bold;
+    }
+    .divTableFoot {
+      background-color: #eee;
+      display: table-footer-group;
+      font-weight: bold;
+    }
+    .divTableBody {
+      display: table-row-group;
+    }
+  }
+}

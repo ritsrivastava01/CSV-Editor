@@ -3,8 +3,11 @@
 body { 
   font-family: Roboto, Arial, sans-serif;
   margin: 0px;
+  height: 100%;
 }
-
+html{
+  height: 100%;
+}
 .basic-container {
   padding: 30px;
 }

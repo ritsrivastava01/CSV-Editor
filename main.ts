@@ -1,10 +1,12 @@
-import { app, BrowserWindow, screen, Menu, globalShortcut  } from 'electron';
+import { app, BrowserWindow, screen, Menu, globalShortcut, MenuItem  } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 const shell = require('electron').shell;
+const remote = require('electron').remote;
 
 let win, serve;
 const args = process.argv.slice(1);
+let menu = new Menu();
 
 serve = args.some(val => val === '--serve');
 
@@ -55,13 +57,41 @@ function createWindow() {
   });
 
   //createMenu();
+  // createContextMenu(win);
+}
+
+function createContextMenu(win:BrowserWindow){
+
+  // Build menu one item at a time, unlike
+  menu.append(new MenuItem({
+    label: 'Save File As',
+    click() {
+      console.log(this);
+      win.webContents.send('saveFile', 'save-file');
+      // this.saveFile();
+    }
+  }));
+
+  menu.append(new MenuItem({ type: 'separator' }));
+  menu.append(new MenuItem({
+    label: 'Reload',
+    click() {
+      win.webContents.send('saveFile', 'save-file');
+    }
+  }));
+
+  // Prevent default action of right click in chromium. Replace with our menu.
+  // win.webContents.addListener('contextmenu', (e) => {
+  //   e.preventDefault();
+  //   menu.popup();
+  // },);
 }
 
 function createMenu() {
 
   // Other code removed for brevity
 
-  const menu = Menu.buildFromTemplate([
+  const ApplicationMenu = Menu.buildFromTemplate([
     {
       label: 'Menu',
       submenu: [
@@ -82,7 +112,7 @@ function createMenu() {
       ]
     }
   ]);
-  Menu.setApplicationMenu(menu);
+  Menu.setApplicationMenu(ApplicationMenu);
 
 }
 
