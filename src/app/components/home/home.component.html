@@ -6,14 +6,22 @@
 
     <mat-drawer-container class="example-container" autosize>
         <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
-          <p>Auto-resizing sidenav</p>
-          <p *ngIf="showFiller">Lorem, ipsum dolor sit amet consectetur.</p>
+          <div class="right">
+              <mat-list>
+                  <mat-list-item>Item 1</mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item>Item 2</mat-list-item>
+                  <mat-divider></mat-divider>
+                  <mat-list-item>Item 3</mat-list-item>
+                </mat-list>
           <!--<button (click)="showFiller = !showFiller" mat-raised-button>
             Toggle extra text
           </button>-->
+        </div>
         </mat-drawer>
       
         <div class="example-sidenav-content">
+          <img src="../../../assets/images/Logo.png" class="logo">
           <!-- <button type="button" mat-button (click)="drawer.toggle()">
             Toggle sidenav
           </button> -->

@@ -46,6 +46,11 @@ export class CsvLayoutComponent implements OnInit {
     // this.createMenu();
     this.fileDropped();
 
+    window.localStorage.setItem('data','ritesh');
+    debugger;
+    alert('hi');
+    console.log(window.localStorage.getItem('data'));
+
     this.electronService.ipcRenderer.on('saveFile', (arg) => {
       this.saveFile();
     });

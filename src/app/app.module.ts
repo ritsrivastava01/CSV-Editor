@@ -24,7 +24,9 @@ import {
          MatTabsModule,
          MatToolbarModule,
          MatButtonModule,
-         MatSidenavModule } from '@angular/material';
+         MatSidenavModule,
+         MatDividerModule,
+         MatListModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
@@ -55,6 +57,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatTabsModule,
     MatNativeDateModule,
     MatSidenavModule,
+    MatListModule,
+    MatDividerModule,
     CsvModule,
     TranslateModule.forRoot({
       loader: {
