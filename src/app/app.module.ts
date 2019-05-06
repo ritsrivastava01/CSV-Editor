@@ -1,3 +1,4 @@
+import { DashbaordModule } from './components/dashboard/dashbaord.module';
 import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
@@ -26,7 +27,8 @@ import {
          MatButtonModule,
          MatSidenavModule,
          MatDividerModule,
-         MatListModule } from '@angular/material';
+         MatListModule,
+         MatIconModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
@@ -60,6 +62,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatListModule,
     MatDividerModule,
     CsvModule,
+    MatIconModule,
+    DashbaordModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

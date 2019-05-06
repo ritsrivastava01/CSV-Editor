@@ -1,7 +1,5 @@
 
-<div class="box" id="drag-file">
-  Drop your files here!
-</div>
+
 <mat-tab-group (selectedTabChange)="tabChanged($event)" (click)="tabChanged()">
   <mat-tab label="{{tab.fileName}}" *ngFor="let tab of tabGroup">
     {{tab.fileName}}

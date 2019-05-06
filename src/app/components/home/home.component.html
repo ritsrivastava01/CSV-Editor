@@ -1,36 +1,49 @@
 <div class="container">
-<app-header></app-header>
+  <app-header></app-header>
 
 
-<div  class="app-container">
+  <div class="app-container">
 
-    <mat-drawer-container class="example-container" autosize>
-        <mat-drawer #drawer class="example-sidenav" mode="side" opened="true">
-          <div class="right">
-              <mat-list>
-                  <mat-list-item>Item 1</mat-list-item>
-                  <mat-divider></mat-divider>
-                  <mat-list-item>Item 2</mat-list-item>
-                  <mat-divider></mat-divider>
-                  <mat-list-item>Item 3</mat-list-item>
-                </mat-list>
-          <!--<button (click)="showFiller = !showFiller" mat-raised-button>
-            Toggle extra text
-          </button>-->
-        </div>
-        </mat-drawer>
+
+    <div class="box" id="drag-file" *ngIf="showDragnDropArea">
+      <mat-icon aria-label="Example icon-button with a heart icon" (click)="showDragnDropArea =false">cancel</mat-icon>
+      <div>
+        <h1>Drag and drop your files here!</h1>
+        <span>(you can drop maximum 5 csv files here)</span>
+      </div>
+    </div>
+    <div class="upper">
+      <div>
+        <img class="imgborder s2" src="../../../assets/images/Logo.png">
+        <mat-divider [vertical]="true" class="vertical-line"></mat-divider>
+        <img src="../../../assets/images/ah_logo1.png">
+      </div>
+      <h1>CSV Editor</h1>
+    </div>
+    <div class="lower">
+      <div class="grid-text">
       
-        <div class="example-sidenav-content">
-          <img src="../../../assets/images/Logo.png" class="logo">
-          <!-- <button type="button" mat-button (click)="drawer.toggle()">
-            Toggle sidenav
-          </button> -->
-        </div>
-      
-      </mat-drawer-container>
- <!-- <app-csv></app-csv>  -->
-   
-</div>
+
+      </div>
+
+      <div class="grid-text">
+       
+
+      </div>
+    </div>
 
 
-  
+    <div class="footer">
+      <button mat-icon-button>
+        <mat-icon aria-label="Example icon-button with a heart icon">settings</mat-icon>
+
+      </button>
+      <button mat-icon-button>
+        <mat-icon aria-label="Example icon-button with a heart icon">language</mat-icon>
+      </button>
+      <button mat-icon-button>
+        <mat-icon aria-label="Example icon-button with a heart icon">question_answer</mat-icon>
+      </button>
+    </div>
+
+  </div>
