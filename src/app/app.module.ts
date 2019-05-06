@@ -1,4 +1,4 @@
-import { DashbaordModule } from './components/dashboard/dashbaord.module';
+
 import 'reflect-metadata';
 import '../polyfills';
 import { BrowserModule } from '@angular/platform-browser';
@@ -33,6 +33,10 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
 import { CsvModule } from './components/csv/csv.module';
+import { DashboardModule } from './components/dashboard/dashboard.module';
+import { FooterComponent } from './components/footer/footer.component';
+import { DropAreaComponent } from './components/drop-area/drop-area.component';
+import { FileService } from './providers/file.service'
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -44,7 +48,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     HomeComponent,
     WebviewDirective,
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent,
+    DropAreaComponent
   ],
   imports: [
     BrowserModule,
@@ -60,10 +66,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatNativeDateModule,
     MatSidenavModule,
     MatListModule,
-    MatDividerModule,
+    
     CsvModule,
     MatIconModule,
-    DashbaordModule,
+    DashboardModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -72,7 +78,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService],
+  providers: [ElectronService, FileService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

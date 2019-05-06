@@ -1,0 +1,39 @@
+:host{
+    
+  .upper {
+    height: 50%;
+    background-image: url("../../.../../../../assets/images/bg.jpg");
+    background-size: 50%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+
+      .vertical-line {
+        height: 190px;
+        border-right-color: #fff;
+        border-right-width: 4px;
+        margin: 0 30px 0 30px;
+        border-radius: 100px;
+        filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+      }
+      img {
+        height: 150px;
+        filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+      }
+    }
+
+    h1 {
+      font-size: 35px;
+      filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+      margin: 0px;
+      margin-bottom: 20px;
+    }
+  }
+}

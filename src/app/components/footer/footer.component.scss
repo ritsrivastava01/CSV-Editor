@@ -1,0 +1,15 @@
+:host{
+    
+  .footer {
+    background-color: #f1f1f1;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    height: 80px;
+    width: 100%;
+    right: 0;
+    left: 0;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

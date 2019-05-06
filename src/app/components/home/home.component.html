@@ -1,17 +1,11 @@
-<div class="container">
+<!-- <div class="container">
   <app-header></app-header>
 
 
   <div class="app-container">
 
 
-    <div class="box" id="drag-file" *ngIf="showDragnDropArea">
-      <mat-icon aria-label="Example icon-button with a heart icon" (click)="showDragnDropArea =false">cancel</mat-icon>
-      <div>
-        <h1>Drag and drop your files here!</h1>
-        <span>(you can drop maximum 5 csv files here)</span>
-      </div>
-    </div>
+   
     <div class="upper">
       <div>
         <img class="imgborder s2" src="../../../assets/images/Logo.png">
@@ -33,17 +27,17 @@
     </div>
 
 
-    <div class="footer">
-      <button mat-icon-button>
-        <mat-icon aria-label="Example icon-button with a heart icon">settings</mat-icon>
+    -->
+    <app-drop-area *ngIf="showDragnDropArea" (cancelClicked)=cancelClickedHandler($event)></app-drop-area>
+    
+  <div class="container">
+      <app-header></app-header>
+    
+    
+      <div class="app-container">
+          <app-dashboard (leftListItemClicked)="leftListItemClickedHandler($event)"></app-dashboard>
+          <app-footer></app-footer>
+        </div>
+        </div>
 
-      </button>
-      <button mat-icon-button>
-        <mat-icon aria-label="Example icon-button with a heart icon">language</mat-icon>
-      </button>
-      <button mat-icon-button>
-        <mat-icon aria-label="Example icon-button with a heart icon">question_answer</mat-icon>
-      </button>
-    </div>
-
-  </div>
+ 

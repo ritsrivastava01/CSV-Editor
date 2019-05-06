@@ -1,0 +1,17 @@
+:host{
+    .lower {
+        display: flex;
+        .file-list {
+          max-height: 200px;
+        }
+       
+    
+        .grid-text {
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          width: 100%;
+          padding-left: 20px;
+        }
+      }
+}

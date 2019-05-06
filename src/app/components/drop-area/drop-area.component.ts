@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-drop-area',
@@ -7,9 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DropAreaComponent implements OnInit {
 
+  @Output() cancelClicked: EventEmitter<boolean> = new EventEmitter();
   constructor() { }
 
   ngOnInit() {
+  }
+  cancelClick = () => {
+    this.cancelClicked.emit(true);
   }
 
 }
