@@ -1,14 +1,15 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { Observer, Observable, of } from 'rxjs';
 import { MatTableDataSource, MatTabChangeEvent } from '@angular/material';
 import * as path from 'path';
-import { ElectronService } from '../../../providers/electron.service';
+import { ElectronService } from '../../../../providers/electron.service';
 const remote = require('electron').remote;
 const { dialog } = require('electron').remote;
 const { Menu, MenuItem } = remote.require('electron');
 const csv = require('csv-parser');
 const csvTOJson = require('csvtojson');
 import { parse, unparse } from 'papaparse';
+import { IFile } from '../../../../providers/file.service';
 const { app, globalShortcut } = require('electron');
 
 let win;
@@ -19,13 +20,13 @@ let win;
 })
 export class CsvLayoutComponent implements OnInit {
 
+  @Input() fileList: Array<ITabGroup> = [];
   dateFiledSet = new Set();
   values = [];
   headers = [];
   dataSource;
   tableArr = [];
   displayedColumns = [];
-  tabGroup: Array<ITabGroup> = [];
   menu = new Menu();
   columnNames = [];
   currentFile: ITabGroup;
@@ -40,15 +41,13 @@ export class CsvLayoutComponent implements OnInit {
     this.dateFiledSet.add('Datum afsluiten agreement');
     this.dateFiledSet.add('Inactivatie datum -optioneel-');
     this.dateFiledSet.add('NID');
-
+  
 
     // this.showDialog();
     // this.createMenu();
-    this.fileDropped();
+    // this.fileDropped();
 
-    window.localStorage.setItem('data','ritesh');
-    debugger;
-    alert('hi');
+    window.localStorage.setItem('data', 'ritesh');
     console.log(window.localStorage.getItem('data'));
 
     this.electronService.ipcRenderer.on('saveFile', (arg) => {
@@ -59,7 +58,6 @@ export class CsvLayoutComponent implements OnInit {
 
 
   showDialog = () => {
-    // this.tabGroup= ['tab1','tab3','tab3'];
     dialog.showOpenDialog({
       title: 'Select file',
       properties: ['openFile', 'multiSelections'],
@@ -68,25 +66,25 @@ export class CsvLayoutComponent implements OnInit {
     }, (filePaths) => {
 
       if (!filePaths) {
-        alert('Please selcted file');
+        alert('Please selected file');
         return;
       }
-      this.tabGroup = filePaths.map(x => {
+      this.fileList = filePaths.map(x => {
         return <ITabGroup>{
           fileName: x.replace(/^.*[\\\/]/, ''),
           filePath: x
         };
       });
-      console.log(this.tabGroup);
+      console.log(this.fileList);
 
-      this.loadDataFromCSV(this.tabGroup[0]);
+      this.loadDataFromCSV(this.fileList[0]);
       // this.loadDataFromCSV(filePaths[0]);
     });
   }
 
   tabChanged(tabChange: MatTabChangeEvent) {
     if (tabChange !== undefined) {
-      this.loadDataFromCSV(this.tabGroup[tabChange.index]);
+      this.loadDataFromCSV(this.fileList[tabChange.index]);
       // this.loadDataFromCSV(file.filePath);
       console.log(tabChange);
     }
@@ -100,7 +98,8 @@ export class CsvLayoutComponent implements OnInit {
 
 
 
-  loadDataFromCSV = (fileObject: ITabGroup) => {
+  loadDataFromCSV = (fileObject: IFile) => {
+    console.table(fileObject);
     this.currentFile = fileObject;
     const file = this.electronService.fs.readFileSync(fileObject.filePath, 'utf8');
     parse(file, {
@@ -127,6 +126,8 @@ export class CsvLayoutComponent implements OnInit {
         this.delimiter = result.meta.delimiter;
         this.dataSource = new MatTableDataSource(this.tableArr);
         console.log(this.tableArr);
+        fileObject.fileData = this.dataSource;
+        fileObject.fileHeader = this.displayedColumns;
         this.changeDetectorRef.detectChanges();
 
 
@@ -212,7 +213,7 @@ export class CsvLayoutComponent implements OnInit {
     // });
   }
 
-  fileDropped = () => {
+  /* fileDropped = () => {
     const holder = document.getElementById('drag-file');
     holder.ondragover = (e: any) => {
       e.target.classList.add('box-drag-over');
@@ -245,7 +246,7 @@ export class CsvLayoutComponent implements OnInit {
       this.loadDataFromCSV(this.tabGroup[0]);
       return false;
     };
-  }
+  } */
 
   createContextMenu = () => {
 
@@ -274,12 +275,5 @@ export class CsvLayoutComponent implements OnInit {
     }, false);
   }
 
-}
-
-
-
-export interface ITabGroup {
-  fileName: string;
-  filePath: string;
 }
 

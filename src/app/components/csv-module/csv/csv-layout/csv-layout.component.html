@@ -1,7 +1,7 @@
 
-
+{{fileList | json}}
 <mat-tab-group (selectedTabChange)="tabChanged($event)" (click)="tabChanged()">
-  <mat-tab label="{{tab.fileName}}" *ngFor="let tab of tabGroup">
+  <mat-tab label="{{tab.fileName}}" *ngFor="let tab of fileList">
     {{tab.fileName}}
     <ng-template matTabContent>
       <mat-table #table [dataSource]="dataSource" matSort>

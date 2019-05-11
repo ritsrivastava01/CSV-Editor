@@ -32,11 +32,11 @@ import {
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
-import { CsvModule } from './components/csv/csv.module';
 import { DashboardModule } from './components/dashboard/dashboard.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { DropAreaComponent } from './components/drop-area/drop-area.component';
 import { FileService } from './providers/file.service'
+import { CsvModule } from './components/csv-module/csv.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -66,9 +66,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatNativeDateModule,
     MatSidenavModule,
     MatListModule,
-    
-    CsvModule,
     MatIconModule,
+    CsvModule,
     DashboardModule,
     TranslateModule.forRoot({
       loader: {
