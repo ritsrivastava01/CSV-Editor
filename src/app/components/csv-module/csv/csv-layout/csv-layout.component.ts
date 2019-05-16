@@ -1,5 +1,5 @@
+import { FileService, IFile } from './../../../../providers/file.service';
 import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
-import { Observer, Observable, of } from 'rxjs';
 import { MatTableDataSource, MatTabChangeEvent } from '@angular/material';
 import * as path from 'path';
 import { ElectronService } from '../../../../providers/electron.service';
@@ -7,12 +7,12 @@ const remote = require('electron').remote;
 const { dialog } = require('electron').remote;
 const { Menu, MenuItem } = remote.require('electron');
 const csv = require('csv-parser');
-const csvTOJson = require('csvtojson');
 import { parse, unparse } from 'papaparse';
-import { IFile } from '../../../../providers/file.service';
 const { app, globalShortcut } = require('electron');
 
 let win;
+
+
 @Component({
   selector: 'app-csv-layout',
   templateUrl: './csv-layout.component.html',
@@ -20,7 +20,7 @@ let win;
 })
 export class CsvLayoutComponent implements OnInit {
 
-  @Input() fileList: Array<ITabGroup> = [];
+  @Input() fileList: Array<IFile> = [];
   dateFiledSet = new Set();
   values = [];
   headers = [];
@@ -29,19 +29,30 @@ export class CsvLayoutComponent implements OnInit {
   displayedColumns = [];
   menu = new Menu();
   columnNames = [];
-  currentFile: ITabGroup;
+  currentFile: IFile;
   delimiter: string;
 
-  constructor(private electronService: ElectronService, private changeDetectorRef: ChangeDetectorRef) { }
+  dummyFile:IFile={
+    fileName:undefined,
+    fileData:undefined
+  }
+  
+  constructor(private electronService: ElectronService, private changeDetectorRef: ChangeDetectorRef, private fileService: FileService) { }
+
 
   ngOnInit() {
+
+    this.fileService.selectedFiles.subscribe(x => {
+      this.fileList = x;
+      this.changeDetectorRef.detectChanges();
+    });
+
     this.dateFiledSet.add('Agreement datum');
     this.dateFiledSet.add('Ingangsdatum');
     this.dateFiledSet.add('Inactivatie datum');
     this.dateFiledSet.add('Datum afsluiten agreement');
     this.dateFiledSet.add('Inactivatie datum -optioneel-');
     this.dateFiledSet.add('NID');
-  
 
     // this.showDialog();
     // this.createMenu();
@@ -55,129 +66,49 @@ export class CsvLayoutComponent implements OnInit {
     });
 
   }
-
-
   showDialog = () => {
-    dialog.showOpenDialog({
-      title: 'Select file',
-      properties: ['openFile', 'multiSelections'],
-      filters: [
-        { name: 'Custom File Type', extensions: ['csv'] }]
-    }, (filePaths) => {
-
-      if (!filePaths) {
-        alert('Please selected file');
-        return;
-      }
-      this.fileList = filePaths.map(x => {
-        return <ITabGroup>{
-          fileName: x.replace(/^.*[\\\/]/, ''),
-          filePath: x
-        };
-      });
-      console.log(this.fileList);
-
-      this.loadDataFromCSV(this.fileList[0]);
-      // this.loadDataFromCSV(filePaths[0]);
-    });
+    this.fileService.showDialog();
   }
+
+
+
 
   tabChanged(tabChange: MatTabChangeEvent) {
     if (tabChange !== undefined) {
-      this.loadDataFromCSV(this.fileList[tabChange.index]);
-      // this.loadDataFromCSV(file.filePath);
-      console.log(tabChange);
+      const selctedFile = this.fileList[tabChange.index];
+      if (!selctedFile.fileData) {
+        this.setCsvData(this.dummyFile);
+        this.laodData(selctedFile);
+      } else {
+        this.setCsvData(selctedFile);
+      }
+
+
     }
 
   }
+  setCsvData(updateFile: IFile) {
+    this.delimiter = updateFile.delimiter;
+    this.dataSource = updateFile.fileData;
+    this.displayedColumns = updateFile.fileHeader;
+    this.columnNames = updateFile.columnName;
+    this.changeDetectorRef.detectChanges();
+    console.log(updateFile);
+  }
+
+  laodData(file: IFile) {
+    this.fileService.loadDataFromCSV(file).subscribe((updateFile: IFile) => {
+      file = updateFile;
+      this.setCsvData(file);
+    });
+  }
 
   showDateField = (filedName): boolean => {
-
     return this.dateFiledSet.has(filedName);
   }
 
 
 
-  loadDataFromCSV = (fileObject: IFile) => {
-    console.table(fileObject);
-    this.currentFile = fileObject;
-    const file = this.electronService.fs.readFileSync(fileObject.filePath, 'utf8');
-    parse(file, {
-      skipEmptyLines: true,
-      complete: (result) => {
-        this.headers = result.data[0];
-        this.headers = this.headers.filter(function (el) {
-          return el !== '';
-        });
-        this.columnNames = this.headers.map((x, index) => {
-          return {
-            id: x,
-            value: x
-          };
-        });
-        this.displayedColumns = this.columnNames.map(x => x.id);
-        console.dir(result.data);
-        result.data.shift();
-        this.tableArr = result.data.map(data => {
-          const obj = new Object();
-          this.headers.map((header, index) => obj[header] = data[index]);
-          return obj;
-        });
-        this.delimiter = result.meta.delimiter;
-        this.dataSource = new MatTableDataSource(this.tableArr);
-        console.log(this.tableArr);
-        fileObject.fileData = this.dataSource;
-        fileObject.fileHeader = this.displayedColumns;
-        this.changeDetectorRef.detectChanges();
-
-
-      }
-    });
-
-  }
-
-  loadDataFromCSV_old = (filePath) => {
-    this.tableArr = [];
-    this.values = [];
-    this.headers = [];
-    this.columnNames = [];
-    this.displayedColumns = [];
-    this.electronService.fs.createReadStream(filePath)
-      .pipe(csv({ separator: ',' }))
-      .on('data', (data) => {
-        if (JSON.stringify(data).toString().indexOf(this.headers[0]) > -1) {
-          this.values.push(data);
-        } else {
-          this.values.push(Object.values(data));
-        }
-
-        this.tableArr.push(data);
-      })
-      .on('headers', (data) => {
-
-        if (data.length === 1) {
-          this.headers = data.toString().split(',');
-        } else {
-          this.headers = data; // data.toString().split(',');
-        }
-        this.headers = this.headers.filter(function (el) {
-          return el !== '';
-        });
-        this.columnNames = this.headers.map((x, index) => {
-          return {
-            id: x,
-            value: x
-          };
-        });
-        this.displayedColumns = this.columnNames.map(x => x.id);
-      })
-      .on('end', () => {
-
-        this.dataSource = new MatTableDataSource(this.tableArr);
-        this.changeDetectorRef.detectChanges();
-
-      });
-  }
 
   saveFile = () => {
     const options = {
@@ -219,20 +150,20 @@ export class CsvLayoutComponent implements OnInit {
       e.target.classList.add('box-drag-over');
       return false;
     };
-
+  
     holder.ondragleave = (e: any) => {
       e.target.classList.remove('box-drag-over');
       return false;
     };
-
+  
     // holder.addEventListener('dragenter', function(event) {
     //     event.target.style.border = '3px dotted red';
     // });
-
+  
     holder.ondragend = () => {
       return false;
     };
-
+  
     holder.ondrop = (e: any) => {
       e.preventDefault();
       const fileList: File[] = Array.from(e.dataTransfer.files);

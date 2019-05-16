@@ -13,14 +13,13 @@ const { dialog } = require('electron').remote;
 })
 export class HomeComponent implements OnInit {
   showDragNDropArea = false;
-  showCsvEditor =false;
+  showCsvEditor = false;
   constructor(private fileService: FileService, private router: Router, private changeDetectionRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     localStorage.setItem('file 1', 'C://programefiles/test1.txt');
     console.log(localStorage.getItem('file 1'));
     this.fileService.selectedFiles.subscribe(x => {
-      console.log(x);
       this.showCsvEditor = true;
       this.changeDetectionRef.detectChanges();
     });
@@ -32,7 +31,7 @@ export class HomeComponent implements OnInit {
   leftListItemClickedHandler = (evt: EuListType) => {
     switch (evt) {
       case EuListType.OPEN_FILE:
-       this.fileService.showDialog(false);
+        this.fileService.showDialog(false);
         break;
       case EuListType.OPEN_FOLDER:
 

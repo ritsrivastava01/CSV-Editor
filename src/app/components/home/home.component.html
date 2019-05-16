@@ -28,17 +28,14 @@
 
 
     -->
-     <app-drop-area *ngIf="showDragNDropArea" (cancelClicked)=cancelClickedHandler($event)></app-drop-area>
-    
-  <div class="container">
-      <app-header></app-header>
-    
-      <app-csv *ngIf="showCsvEditor" (cancelClicked)=cancelClickedHandler($event)></app-csv>
-    
-      <div class="app-container" *ngIf="!showCsvEditor">
-          <app-dashboard (leftListItemClicked)="leftListItemClickedHandler($event)"></app-dashboard>
-          <app-footer></app-footer>
-        </div>
-        </div>
+<app-drop-area *ngIf="showDragNDropArea" (cancelClicked)=cancelClickedHandler($event)></app-drop-area>
 
- 
+<div class="container">
+  <app-header></app-header>
+
+  <div class="app-container" >
+      <app-csv (cancelClicked)=cancelClickedHandler($event)></app-csv>
+    <app-dashboard (leftListItemClicked)="leftListItemClickedHandler($event)" *ngIf="!showCsvEditor"></app-dashboard>
+    <app-footer></app-footer>
+  </div>
+</div>
