@@ -1,0 +1,9 @@
+<h2>Recent Files</h2>
+
+<div class="file-list" >
+
+    <div class="link" *ngFor="let file of recentFiles; let ind= index" (click)=loadFile(file)>
+        <img src="../../../assets/images/csv-file.png">
+        <span>{{file?.fileName}}</span>
+      </div>
+</div>

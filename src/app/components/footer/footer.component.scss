@@ -1,0 +1,35 @@
+:host{
+    
+  .footer {
+    background-color: #f1f1f1;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    height: 80px;
+    width: 100%;
+    right: 0;
+    left: 0;
+    justify-content: space-around;
+    align-items: center;
+
+    .speech-bubble {
+      position: relative;
+      background: #00aabb;
+      border-radius: .4em;
+    }
+    
+    .speech-bubble:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border: 27px solid transparent;
+      border-top-color: #00aabb;
+      border-bottom: 0;
+      margin-left: -27px;
+      margin-bottom: -27px;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+<div class="footer">
+   
+    <button mat-icon-button>
+        <div class="speech-bubble " *ngIf="settingClicked">
+            Settings
+          </div>
+      <mat-icon aria-label="Example icon-button with a heart icon" (click)="settingClicked =!settingClicked">settings</mat-icon>
+
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">language</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">question_answer</mat-icon>
+    </button>
+  </div>
