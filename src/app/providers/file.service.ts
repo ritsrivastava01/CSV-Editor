@@ -32,7 +32,7 @@ export class FileService {
     }, (filePaths) => {
 
       if (!filePaths) {
-        alert('Please selected file');
+        // alert('Please selected file');
         return;
       }
       this.files = filePaths.map(x => {
@@ -41,8 +41,35 @@ export class FileService {
           filePath: x
         };
       });
-      this.selectedFiles.next(this.files);
+      this.loadFilesInApplication(this.files);
     });
+  }
+
+  loadFilesInApplication = (files: Array<IFile>) => {
+    this.saveRecentFileListToLocalStogare(files);
+
+    this.selectedFiles.next(files);
+  }
+
+  private saveRecentFileListToLocalStogare = (fileList: Array<IFile>) => {
+    // window.localStorage.removeItem('csv_editor_fileList');
+
+
+    const savedFiles = window.localStorage.getItem('csv_editor_fileList') ?
+      JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
+
+    const fileToSave = JSON.stringify(fileList.concat(savedFiles).slice(0, 5).map(x => <IFile>{
+      fileName: x.fileName,
+      filePath: x.filePath
+    }));
+    console.table(JSON.parse(fileToSave));
+    window.localStorage.setItem('csv_editor_fileList', fileToSave);
+  }
+
+  getRecentSavedFiles = (): Array<IFile> => {
+    return window.localStorage.getItem('csv_editor_fileList') ?
+      JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
+
   }
 
 

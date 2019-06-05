@@ -10,8 +10,6 @@
         z-index: 1;
         left: 10%;
         top: 10%;
-  
-        border: 3px gray dashed;
         color: gray;
         filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
   
@@ -38,7 +36,11 @@
           }
         }
       }
+      .csv-progress-bar{
+        width: 70% !important;
+        height: 10% !important;
+      }
       .box-drag-over {
-        background-color: grey;
+        //background-color: grey;
       }
 }

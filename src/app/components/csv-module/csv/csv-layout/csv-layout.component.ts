@@ -1,6 +1,6 @@
 import { FileService, IFile } from './../../../../providers/file.service';
-import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
-import { MatTableDataSource, MatTabChangeEvent } from '@angular/material';
+import { Component, OnInit, ChangeDetectorRef, Input, ViewChild, HostBinding } from '@angular/core';
+import { MatTableDataSource, MatTabChangeEvent, MatPaginator } from '@angular/material';
 import * as path from 'path';
 import { ElectronService } from '../../../../providers/electron.service';
 const remote = require('electron').remote;
@@ -8,6 +8,7 @@ const { dialog } = require('electron').remote;
 const { Menu, MenuItem } = remote.require('electron');
 const csv = require('csv-parser');
 import { parse, unparse } from 'papaparse';
+import { checkAndUpdateBinding } from '@angular/core/src/view/util';
 const { app, globalShortcut } = require('electron');
 
 let win;
@@ -32,18 +33,24 @@ export class CsvLayoutComponent implements OnInit {
   currentFile: IFile;
   delimiter: string;
 
-  dummyFile:IFile={
-    fileName:undefined,
-    fileData:undefined
+  dummyFile: IFile = {
+    fileName: undefined,
+    fileData: undefined
   }
-  
-  constructor(private electronService: ElectronService, private changeDetectorRef: ChangeDetectorRef, private fileService: FileService) { }
 
+  constructor(private electronService: ElectronService, private changeDetectorRef: ChangeDetectorRef, private fileService: FileService) { }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  isVisible = false;
 
   ngOnInit() {
-
     this.fileService.selectedFiles.subscribe(x => {
+
       this.fileList = x;
+      if (this.fileList.length > 0) {
+        this.isVisible = true;
+      } else {
+        this.isVisible = true;
+      }
       this.changeDetectorRef.detectChanges();
     });
 
@@ -58,8 +65,6 @@ export class CsvLayoutComponent implements OnInit {
     // this.createMenu();
     // this.fileDropped();
 
-    window.localStorage.setItem('data', 'ritesh');
-    console.log(window.localStorage.getItem('data'));
 
     this.electronService.ipcRenderer.on('saveFile', (arg) => {
       this.saveFile();
@@ -70,14 +75,16 @@ export class CsvLayoutComponent implements OnInit {
     this.fileService.showDialog();
   }
 
-
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 
 
   tabChanged(tabChange: MatTabChangeEvent) {
     if (tabChange !== undefined) {
       const selctedFile = this.fileList[tabChange.index];
       if (!selctedFile.fileData) {
-        this.setCsvData(this.dummyFile);
+        // this.setCsvData(this.dummyFile);
         this.laodData(selctedFile);
       } else {
         this.setCsvData(selctedFile);
@@ -92,6 +99,7 @@ export class CsvLayoutComponent implements OnInit {
     this.dataSource = updateFile.fileData;
     this.displayedColumns = updateFile.fileHeader;
     this.columnNames = updateFile.columnName;
+    this.dataSource.paginator = this.paginator;
     this.changeDetectorRef.detectChanges();
     console.log(updateFile);
   }

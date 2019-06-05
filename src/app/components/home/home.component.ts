@@ -17,10 +17,9 @@ export class HomeComponent implements OnInit {
   constructor(private fileService: FileService, private router: Router, private changeDetectionRef: ChangeDetectorRef) { }
 
   ngOnInit() {
-    localStorage.setItem('file 1', 'C://programefiles/test1.txt');
-    console.log(localStorage.getItem('file 1'));
     this.fileService.selectedFiles.subscribe(x => {
       this.showCsvEditor = true;
+      this.showDragNDropArea = false;
       this.changeDetectionRef.detectChanges();
     });
   }

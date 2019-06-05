@@ -1,14 +1,21 @@
 <mat-toolbar color="primary">
-    <img class="logo" src="../../../assets/images/Logo.png">
-    <span>CSV Editor</span>
-  
-    <!-- This fills the remaining space of the current row -->
-    <span class="example-fill-remaining-space"></span>
-    <button mat-button>
-      Upload SCV
-    </button>
-    <button mat-button>
+  <img class="logo" src="../../../assets/images/Logo.png">
+  <span>CSV Editor</span>
+
+  <!-- This fills the remaining space of the current row -->
+  <span class="example-fill-remaining-space"></span>
+  <button mat-button (click)="uploadCsvClicked()">
+    Upload SCV
+  </button>
+  <button mat-button>
     <img src="../../../assets/images/github.svg">
-      GitHub</button>
-    <span></span>
-  </mat-toolbar>
+    GitHub</button>
+
+  <app-theme-picker></app-theme-picker>
+  <!--<mat-icon aria-label="Example icon-button with a heart icon" >settings</mat-icon>-->
+  <button mat-button [matMenuTriggerFor]="menu">{{selectedLanguage}}</button>
+  <!-- USed to show the language option -->
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item *ngFor="let item of languages" (click)="changeLanguage(item)">{{item.name}}</button>
+  </mat-menu>
+</mat-toolbar>

@@ -7,9 +7,10 @@ import { FormsModule } from '@angular/forms';
 import {
   MatTableModule,
   MatInputModule,
-  MatTabsModule
+  MatTabsModule,
+  MatCardModule,
+  MatPaginatorModule
 } from '@angular/material';
-import { CsvRoutingModule } from './csv-routing.module';
 
 
 
@@ -25,6 +26,8 @@ import { CsvRoutingModule } from './csv-routing.module';
     MatInputModule,
     MatTabsModule,
     FormsModule,
+    MatCardModule,
+    MatPaginatorModule,
   ],
   exports: [
     CsvComponent

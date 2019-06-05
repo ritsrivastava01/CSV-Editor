@@ -26,9 +26,11 @@ import {
          MatToolbarModule,
          MatButtonModule,
          MatSidenavModule,
-         MatDividerModule,
+         MatGridListModule,
          MatListModule,
-         MatIconModule } from '@angular/material';
+         MatIconModule,
+         MatProgressBarModule,
+         MatMenuModule } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './components/header/header.component';
@@ -37,6 +39,9 @@ import { FooterComponent } from './components/footer/footer.component';
 import { DropAreaComponent } from './components/drop-area/drop-area.component';
 import { FileService } from './providers/file.service'
 import { CsvModule } from './components/csv-module/csv.module';
+import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
+import { StyleManager } from './components/theme-picker/style-manager/style-manager';
+import { ThemeStorage } from './components/theme-picker/theme-storge/theme-storage';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -50,7 +55,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebviewDirective,
     HeaderComponent,
     FooterComponent,
-    DropAreaComponent
+    DropAreaComponent,
+    ThemePickerComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -69,6 +76,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     CsvModule,
     DashboardModule,
+    MatMenuModule,
+    MatProgressBarModule,
+    MatGridListModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -77,7 +87,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  providers: [ElectronService, FileService],
+  providers: [ElectronService, FileService, StyleManager, ThemeStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
