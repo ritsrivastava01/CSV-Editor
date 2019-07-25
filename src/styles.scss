@@ -1,11 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 // @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-body { 
+
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material.css";
+
+body {
   font-family: Roboto, Arial, sans-serif;
   margin: 0px;
   height: 100%;
+  background-color: #fafafa;
 }
-html{
+html {
   height: 100%;
 }
 .basic-container {

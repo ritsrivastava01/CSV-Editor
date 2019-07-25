@@ -1,13 +1,14 @@
-:host{
-    .link {
-        color: #4d90fe;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        padding-bottom: 10px;
-        img {
-          height: 30px;
-          padding-right: 10px;
-        }
-      }
+:host {
+  .link {
+    color: #4d90fe;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    font-size: 0.9rem;
+    img {
+      height: 30px;
+      padding-right: 10px;
+    }
+  }
 }

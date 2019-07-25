@@ -2,11 +2,22 @@
   <mat-tab label="{{tab.fileName}}" *ngFor="let tab of fileList">
     {{tab.fileName}}
     <ng-template matTabContent>
-      <mat-form-field class="full-width">
+      <!-- <mat-form-field class="full-width">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter the CSV">
-      </mat-form-field>
+      </mat-form-field> -->
+      <div class="div-button">
+        <button mat-stroked-button color="primary" (click)="onRemoveSelected()">Remove Selected</button>
+        <button mat-stroked-button color="primary" (click)="onAddRow()">Add Row</button>
+      </div>
       <div class="table-container">
-        <table mat-table #table [dataSource]="dataSource" matSort>
+
+        <ag-grid-angular style=" height: 95%; width:100%" class="ag-theme-balham" [singleClickEdit]="true"
+          [rowData]="tempDataRow | async" [stopEditingWhenGridLosesFocus]="true" [paginationPageSize]="20"
+          [columnDefs]="tempheaderRow | async" [pagination]="true" [rowDragManaged]="true" [animateRows]="true"
+          [rowData]="rowData" [rowSelection]="rowSelection" [getRowHeight]="80" (gridReady)="onGridReady($event)" (cellValueChanged)="onCellValueChanged($event)">
+        </ag-grid-angular>
+
+        <!-- <table mat-table #table [dataSource]="dataSource" matSort>
 
           <ng-container matColumnDef="{{column.id}}" *ngFor="let column of columnNames; let ind= index">
             <mat-header-cell *matHeaderCellDef mat-sort-header [ngClass]="{'possition':ind ===0}"> {{column.value}}
@@ -15,7 +26,7 @@
 
             <mat-cell *matCellDef="let element" [ngClass]="{'possition':ind ===0}">
 
-              <!-- Position Column -->
+            
               <ng-container cdkColumnDef="position" *ngIf="ind ===0">
                 <td cdk-cell> {{element.poss}} </td>
               </ng-container>
@@ -39,9 +50,9 @@
           </ng-container>
           <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
           <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </table>
+        </table> -->
       </div>
-    <mat-paginator [pageSizeOptions]="[10, 20, 50]"  [pageSize]="10" showFirstLastButtons></mat-paginator>
+      <!-- <mat-paginator [pageSizeOptions]="[10, 20, 50]"  [pageSize]="10" showFirstLastButtons></mat-paginator> -->
     </ng-template>
 
   </mat-tab>

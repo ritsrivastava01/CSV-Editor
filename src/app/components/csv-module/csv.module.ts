@@ -4,12 +4,14 @@ import { CsvLayoutComponent } from './csv/csv-layout/csv-layout.component';
 import { CsvHeaderComponent } from './csv/csv-header/csv-header.component';
 import { CsvComponent } from './csv/csv.component';
 import { FormsModule } from '@angular/forms';
+import { AgGridModule } from 'ag-grid-angular';
 import {
   MatTableModule,
   MatInputModule,
   MatTabsModule,
   MatCardModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  MatButtonModule
 } from '@angular/material';
 
 
@@ -27,7 +29,9 @@ import {
     MatTabsModule,
     FormsModule,
     MatCardModule,
+    MatButtonModule,
     MatPaginatorModule,
+    AgGridModule.withComponents([])
   ],
   exports: [
     CsvComponent
