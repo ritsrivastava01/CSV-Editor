@@ -1,3 +1,5 @@
+import { ThemeStorage } from './components/shared/theme-picker/theme-storge/theme-storage';
+import { StyleManager } from './components/shared/theme-picker/style-manager/style-manager';
 
 import 'reflect-metadata';
 import '../polyfills';
@@ -19,29 +21,26 @@ import { WebviewDirective } from './directives/webview.directive';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { 
-         MatNativeDateModule,
-         MatTabsModule,
-         MatToolbarModule,
-         MatButtonModule,
-         MatSidenavModule,
-         MatGridListModule,
-         MatListModule,
-         MatIconModule,
-         MatProgressBarModule,
-         MatMenuModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  MatNativeDateModule,
+  MatTabsModule,
+  MatToolbarModule,
+  MatButtonModule,
+  MatSidenavModule,
+  MatGridListModule,
+  MatListModule,
+  MatIconModule,
+  MatProgressBarModule,
+  MatMenuModule
+} from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HeaderComponent } from './components/header/header.component';
 import { DashboardModule } from './components/dashboard/dashboard.module';
-import { FooterComponent } from './components/footer/footer.component';
 import { DropAreaComponent } from './components/drop-area/drop-area.component';
-import { FileService } from './providers/file.service'
+import { FileService } from './providers/file.service';
 import { CsvModule } from './components/csv-module/csv.module';
-import { ThemePickerComponent } from './components/theme-picker/theme-picker.component';
-import { StyleManager } from './components/theme-picker/style-manager/style-manager';
-import { ThemeStorage } from './components/theme-picker/theme-storge/theme-storage';
+import { SharedModule } from './components/shared/shared.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -53,11 +52,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     HomeComponent,
     WebviewDirective,
-    HeaderComponent,
-    FooterComponent,
-    DropAreaComponent,
-    ThemePickerComponent,
-    
+    DropAreaComponent
   ],
   imports: [
     BrowserModule,
@@ -79,10 +74,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatMenuModule,
     MatProgressBarModule,
     MatGridListModule,
+    SharedModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
+        useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
     })
@@ -90,4 +86,4 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [ElectronService, FileService, StyleManager, ThemeStorage],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

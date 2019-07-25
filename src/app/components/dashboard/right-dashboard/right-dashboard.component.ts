@@ -8,10 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RightDashboardComponent implements OnInit {
   recentFiles: Array<IFile> = [];
-  constructor(private fileService: FileService) { }
+  constructor(private fileService: FileService) {}
 
   ngOnInit() {
     this.recentFiles = this.fileService.getRecentSavedFiles();
+    console.log(this.recentFiles);
   }
 
   loadFile(file: IFile) {

@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { EuListType } from '../left-dashboard/left-dashboard.component';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -9,10 +8,9 @@ import { EuListType } from '../left-dashboard/left-dashboard.component';
 })
 export class DashboardComponent implements OnInit {
   @Output() leftListItemClicked: EventEmitter<EuListType> = new EventEmitter();
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   listItemClickedHandler = (evt: EuListType) => {
     this.leftListItemClicked.emit(evt);

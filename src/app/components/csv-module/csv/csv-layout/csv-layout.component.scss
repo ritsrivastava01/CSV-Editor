@@ -15,12 +15,15 @@
   background: #fff;
   color: rgba(0, 0, 0, 0.87);
 
-  // /deep/.mat-tab-label{
-  //   min-width: 0!important;
-  //   padding: 3px!important;
-  //   margin: 3px!important;
-  //   max-width:200px !important;
-  //  }
+  .div-button{
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 0 10px 0;
+    
+     :first-child{
+       margin-right: 10px
+     }
+  }
   mat-tab-group {
     padding: 0 16px 0px 16px;
        

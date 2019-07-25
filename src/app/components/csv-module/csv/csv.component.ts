@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FileService, IFile } from '../../../providers/file.service';
 import { Observer, Observable } from 'rxjs';
 
@@ -10,7 +10,11 @@ import { Observer, Observable } from 'rxjs';
 export class CsvComponent {
 
   files: Observable<Array<IFile>> = this.fileService.selectedFiles;
+  @Output() gridEdited:EventEmitter<boolean> = new EventEmitter<boolean>();
   constructor(public fileService: FileService) { }
 
-
+  isGridEdited(evt: any) {
+    console.log(evt);
+    this.gridEdited.emit(evt);
+  }
 }

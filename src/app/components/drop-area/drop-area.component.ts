@@ -1,5 +1,11 @@
 import { FileService } from './../../providers/file.service';
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef
+} from '@angular/core';
 import { IFile } from '../../providers/file.service';
 import * as path from 'path';
 
@@ -9,13 +15,13 @@ import * as path from 'path';
   styleUrls: ['./drop-area.component.scss']
 })
 export class DropAreaComponent implements OnInit {
-
   @Output() cancelClicked: EventEmitter<boolean> = new EventEmitter();
   files: Array<IFile> = [];
   value = 20;
-  constructor(private changeDetectorRef: ChangeDetectorRef, private fileService: FileService) {
-
-  }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private fileService: FileService
+  ) {}
 
   ngOnInit() {
     this.fileDropped();
@@ -23,7 +29,6 @@ export class DropAreaComponent implements OnInit {
   cancelClick = () => {
     this.cancelClicked.emit(true);
   }
-
 
   fileDropped = () => {
     const holder = document.getElementById('drag-file');
@@ -48,15 +53,17 @@ export class DropAreaComponent implements OnInit {
     holder.ondrop = (e: any) => {
       e.preventDefault();
       const fileList: File[] = Array.from(e.dataTransfer.files);
-      this.files = fileList.filter((x: File) => path.extname(x.path) === '.csv').map((y: File) => {
-        this.changeDetectorRef.detectChanges();
-        return <IFile>{
-          fileName: y.name,
-          filePath: y.path
-        };
-      });
+      this.files = fileList
+        .filter((x: File) => path.extname(x.path) === '.csv')
+        .map((y: File) => {
+          this.changeDetectorRef.detectChanges();
+          return <IFile>{
+            fileName: y.name,
+            filePath: y.path
+          };
+        });
       this.fileService.loadFilesInApplication(this.files);
-      //this.fileService.loadDataFromCSV(this.files[0]);
+      // this.fileService.loadDataFromCSV(this.files[0]);
       return false;
     };
   }

@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Observable, of, Observer } from 'rxjs';
 import { ElectronService } from './electron.service';
@@ -16,7 +17,7 @@ export interface IFile {
 
 @Injectable()
 export class FileService {
-
+  private fileHeaders: Array<any>;
   selectedFiles: ReplaySubject<Array<IFile>> = new ReplaySubject();
   private files: Array<IFile> = [];
   constructor(private electronService: ElectronService) {
@@ -71,10 +72,19 @@ export class FileService {
       JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
 
   }
-
+  getBlankRow = () => {
+    // TODO: Need to refactor
+    const obj = new Object();
+    this.fileHeaders.map(x => {
+      obj[x] = '';
+      return obj;
+    });
+    return obj;
+  }
 
   loadDataFromCSV = (fileObject: IFile): Observable<IFile> => {
     let headers = [], columnNames = [], displayedColumns = [], tableArr = [];
+    this.fileHeaders = [];
     const file = this.electronService.fs.readFileSync(fileObject.filePath, 'utf8');
     return new Observable((observer: Observer<IFile>) => {
       parse(file, {
@@ -90,7 +100,7 @@ export class FileService {
               value: x
             };
           });
-          columnNames.unshift({ id: 'poss', value: 'Possition' });
+          columnNames.unshift({ id: 'Sr No', value: 'Possition' });
           displayedColumns = columnNames.map(x => x.id);
           console.dir(result.data);
           result.data.shift();
@@ -104,7 +114,7 @@ export class FileService {
           tableArr = arrData.map((data, ind) => {
             const obj = new Object();
             headers.map((header, index) => obj[header] = data[index]);
-            obj['poss'] = ind;
+            obj['Sr No'] = ind;
             return obj;
           });
 
@@ -113,6 +123,7 @@ export class FileService {
           fileObject.fileHeader = displayedColumns;
           fileObject.columnName = columnNames;
           fileObject.delimiter = result.meta.delimiter;
+          this.fileHeaders = displayedColumns;
           observer.next(fileObject);
 
         }
