@@ -12,13 +12,15 @@ import {
   MatGridListModule
 } from '@angular/material';
 import { ThemePickerComponent } from './theme-picker/theme-picker.component';
+import { ParticlesComponent } from './particles/particles.component';
 
 @NgModule({
   declarations: [
     ConfirmationDialogComponent,
     HeaderComponent,
     FooterComponent,
-    ThemePickerComponent
+    ThemePickerComponent,
+    ParticlesComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +31,7 @@ import { ThemePickerComponent } from './theme-picker/theme-picker.component';
     MatIconModule,
     MatGridListModule
   ],
-  exports: [FooterComponent, HeaderComponent],
+  exports: [FooterComponent, HeaderComponent, ParticlesComponent],
   entryComponents: [ConfirmationDialogComponent]
 })
 export class SharedModule {}

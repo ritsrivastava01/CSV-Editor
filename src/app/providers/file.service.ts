@@ -20,30 +20,35 @@ export class FileService {
   private fileHeaders: Array<any>;
   selectedFiles: ReplaySubject<Array<IFile>> = new ReplaySubject();
   private files: Array<IFile> = [];
-  constructor(private electronService: ElectronService) {
-
-  }
+  constructor(private electronService: ElectronService) {}
 
   showDialog = (selectFolder: Boolean = false) => {
-    dialog.showOpenDialog({
-      title: 'Select file',
-      properties: ['openFile', 'multiSelections'],
-      filters: [
-        { name: 'Custom File Type', extensions: ['csv'] }]
-    }, (filePaths) => {
-
-      if (!filePaths) {
-        // alert('Please selected file');
-        return;
+    dialog.showOpenDialog(
+      {
+        title: 'Select file',
+        properties: selectFolder
+          ? ['multiSelections', 'openFile']
+          : ['openFile'],
+        filters: [{ name: 'Custom File Type', extensions: ['csv'] }]
+      },
+      filePaths => {
+        if (!filePaths) {
+          // alert('Please selected file');
+          return;
+        }
+        if (filePaths.length > 5) {
+          alert('Only file files allowed!');
+          return;
+        }
+        this.files = filePaths.map(x => {
+          return <IFile>{
+            fileName: x.replace(/^.*[\\\/]/, ''),
+            filePath: x
+          };
+        });
+        this.loadFilesInApplication(this.files);
       }
-      this.files = filePaths.map(x => {
-        return <IFile>{
-          fileName: x.replace(/^.*[\\\/]/, ''),
-          filePath: x
-        };
-      });
-      this.loadFilesInApplication(this.files);
-    });
+    );
   }
 
   loadFilesInApplication = (files: Array<IFile>) => {
@@ -55,22 +60,30 @@ export class FileService {
   private saveRecentFileListToLocalStogare = (fileList: Array<IFile>) => {
     // window.localStorage.removeItem('csv_editor_fileList');
 
+    const savedFiles = window.localStorage.getItem('csv_editor_fileList')
+      ? JSON.parse(window.localStorage.getItem('csv_editor_fileList'))
+      : [];
 
-    const savedFiles = window.localStorage.getItem('csv_editor_fileList') ?
-      JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
-
-    const fileToSave = JSON.stringify(fileList.concat(savedFiles).slice(0, 5).map(x => <IFile>{
-      fileName: x.fileName,
-      filePath: x.filePath
-    }));
+    const fileToSave = JSON.stringify(
+      fileList
+        .concat(savedFiles)
+        .slice(0, 5)
+        .map(
+          x =>
+            <IFile>{
+              fileName: x.fileName,
+              filePath: x.filePath
+            }
+        )
+    );
     console.table(JSON.parse(fileToSave));
     window.localStorage.setItem('csv_editor_fileList', fileToSave);
   }
 
   getRecentSavedFiles = (): Array<IFile> => {
-    return window.localStorage.getItem('csv_editor_fileList') ?
-      JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
-
+    return window.localStorage.getItem('csv_editor_fileList')
+      ? JSON.parse(window.localStorage.getItem('csv_editor_fileList'))
+      : [];
   }
   getBlankRow = () => {
     // TODO: Need to refactor
@@ -83,15 +96,21 @@ export class FileService {
   }
 
   loadDataFromCSV = (fileObject: IFile): Observable<IFile> => {
-    let headers = [], columnNames = [], displayedColumns = [], tableArr = [];
+    let headers = [],
+      columnNames = [],
+      displayedColumns = [],
+      tableArr = [];
     this.fileHeaders = [];
-    const file = this.electronService.fs.readFileSync(fileObject.filePath, 'utf8');
+    const file = this.electronService.fs.readFileSync(
+      fileObject.filePath,
+      'utf8'
+    );
     return new Observable((observer: Observer<IFile>) => {
       parse(file, {
         skipEmptyLines: true,
-        complete: (result) => {
+        complete: result => {
           headers = result.data[0];
-          headers = headers.filter(function (el) {
+          headers = headers.filter(function(el) {
             return el !== '';
           });
           columnNames = headers.map((x, index) => {
@@ -113,22 +132,19 @@ export class FileService {
 
           tableArr = arrData.map((data, ind) => {
             const obj = new Object();
-            headers.map((header, index) => obj[header] = data[index]);
+            headers.map((header, index) => (obj[header] = data[index]));
             obj['Sr No'] = ind;
             return obj;
           });
 
-
-          fileObject.fileData = new MatTableDataSource(tableArr);
+          fileObject.fileData = tableArr;
           fileObject.fileHeader = displayedColumns;
           fileObject.columnName = columnNames;
           fileObject.delimiter = result.meta.delimiter;
           this.fileHeaders = displayedColumns;
           observer.next(fileObject);
-
         }
       });
     });
-
   }
 }

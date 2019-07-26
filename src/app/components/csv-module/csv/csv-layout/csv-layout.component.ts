@@ -77,7 +77,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
     params.api.sizeColumnsToFit();
-    this.IsEdited= false;
+    this.IsEdited = false;
     this.isGridEdited.emit(false);
   }
   onAddRow() {
@@ -89,7 +89,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
   }
 
   getRowData() {
-    let rowData = [];
+    const rowData = [];
     this.gridApi.forEachNode(function(node) {
       rowData.push(node.data);
     });
@@ -111,6 +111,9 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fileService.selectedFiles.subscribe(x => {
+      this.tempheaderRow = of([]);
+      this.tempDataRow = of([]);
+
       this.fileList = x;
       if (this.fileList.length > 0) {
         this.fileService.loadDataFromCSV(this.fileList[0]);
@@ -168,8 +171,10 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     this.displayedColumns = updateFile.fileHeader;
     this.columnNames = updateFile.columnName;
     // this.dataSource.paginator = this.paginator;
+    setTimeout(() => {
+      this.generateDataForAgGrid(updateFile);
+    }, 500);
 
-    this.generateDataForAgGrid(updateFile);
     this.changeDetectorRef.detectChanges();
     console.log(updateFile);
   }
@@ -196,7 +201,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
       })
     );
     this.tempheaderRow.subscribe(c => console.log(c));
-    this.tempDataRow = of(file.fileData.data);
+    this.tempDataRow = of(file.fileData);
   }
 
   laodData(file: IFile) {

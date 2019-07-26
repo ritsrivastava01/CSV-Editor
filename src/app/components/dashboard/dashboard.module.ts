@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LeftDashboardComponent } from './left-dashboard/left-dashboard.component';
@@ -6,6 +7,8 @@ import { UpperDashboardComponent } from './upper-dashboard/upper-dashboard.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatDividerModule } from '@angular/material';
 import { TransformFileNamePipe } from '../../pipes/transform-file-name.pipe';
+
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -14,7 +17,7 @@ import { TransformFileNamePipe } from '../../pipes/transform-file-name.pipe';
     UpperDashboardComponent,
     TransformFileNamePipe
   ],
-  imports: [CommonModule, MatDividerModule],
+  imports: [CommonModule, MatDividerModule, SharedModule],
   exports: [DashboardComponent]
 })
 export class DashboardModule {}
