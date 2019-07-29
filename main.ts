@@ -1,4 +1,11 @@
-import { app, BrowserWindow, screen, Menu, globalShortcut, MenuItem  } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  screen,
+  Menu,
+  globalShortcut,
+  MenuItem
+} from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 const shell = require('electron').shell;
@@ -6,19 +13,17 @@ const remote = require('electron').remote;
 
 let win, serve;
 const args = process.argv.slice(1);
-let menu = new Menu();
+const menu = new Menu();
 
 serve = args.some(val => val === '--serve');
 
 function createWindow() {
-
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
-    globalShortcut.register('CommandOrControl+S', () => {
-      win.webContents.send('saveFile', 'save-file');
-    });
-
+  globalShortcut.register('CommandOrControl+S', () => {
+    win.webContents.send('saveFile', 'save-file');
+  });
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -28,8 +33,8 @@ function createWindow() {
     height: size.height - 200,
     icon: __dirname + 'assets/icons/win/64x64.png',
     webPreferences: {
-      nodeIntegration: true,
-    },
+      nodeIntegration: true
+    }
   });
   if (serve) {
     require('electron-reload')(__dirname, {
@@ -37,11 +42,13 @@ function createWindow() {
     });
     win.loadURL('http://localhost:4200');
   } else {
-    win.loadURL(url.format({
-      pathname: path.join(__dirname, 'dist/index.html'),
-      protocol: 'file:',
-      slashes: true
-    }));
+    win.loadURL(
+      url.format({
+        pathname: path.join(__dirname, 'dist/index.html'),
+        protocol: 'file:',
+        slashes: true
+      })
+    );
   }
 
   if (serve) {
@@ -56,39 +63,41 @@ function createWindow() {
     win = null;
   });
 
-  //createMenu();
+  createMenu();
   // createContextMenu(win);
 }
 
-function createContextMenu(win:BrowserWindow){
-
+function createContextMenu(win: BrowserWindow) {
   // Build menu one item at a time, unlike
-  menu.append(new MenuItem({
-    label: 'Save File As',
-    click() {
-      console.log(this);
-      win.webContents.send('saveFile', 'save-file');
-      // this.saveFile();
-    }
-  }));
+  menu.append(
+    new MenuItem({
+      label: 'Save File As',
+      click() {
+        console.log(this);
+        win.webContents.send('saveFile', 'save-file');
+        // this.saveFile();
+      }
+    })
+  );
 
   menu.append(new MenuItem({ type: 'separator' }));
-  menu.append(new MenuItem({
-    label: 'Reload',
-    click() {
-      win.webContents.send('saveFile', 'save-file');
-    }
-  }));
+  menu.append(
+    new MenuItem({
+      label: 'Reload',
+      click() {
+        win.webContents.send('saveFile', 'save-file');
+      }
+    })
+  );
 
   // Prevent default action of right click in chromium. Replace with our menu.
-  // win.webContents.addListener('contextmenu', (e) => {
-  //   e.preventDefault();
-  //   menu.popup();
-  // },);
+  win.webContents.addListener('contextmenu', e => {
+    e.preventDefault();
+    menu.popup();
+  });
 }
 
 function createMenu() {
-
   // Other code removed for brevity
 
   const ApplicationMenu = Menu.buildFromTemplate([
@@ -100,24 +109,25 @@ function createMenu() {
         { label: 'Save', accelerator: 'CmdOrCtrl+S' },
         { type: 'separator' },
         {
-          label: 'Exit', accelerator: 'Esc', click() {
+          label: 'Exit',
+          accelerator: 'Esc',
+          click() {
             app.quit();
           }
         },
         {
-          label: 'GitHub', click() {
+          label: 'GitHub',
+          click() {
             shell.openExternal('http://google.com');
-          },
-        },
+          }
+        }
       ]
     }
   ]);
   Menu.setApplicationMenu(ApplicationMenu);
-
 }
 
 try {
-
   // This method will be called when Electron has finished
   // initialization and is ready to create browser windows.
   // Some APIs can only be used after this event occurs.
@@ -139,7 +149,6 @@ try {
       createWindow();
     }
   });
-
 } catch (e) {
   // Catch Error
   // throw e;

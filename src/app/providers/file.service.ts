@@ -119,7 +119,10 @@ export class FileService {
               value: x
             };
           });
-          columnNames.unshift({ id: 'Sr No', value: 'Possition' });
+          columnNames.unshift({
+            id: 'Sr No',
+            value: 'Possition'
+          });
           displayedColumns = columnNames.map(x => x.id);
           console.dir(result.data);
           result.data.shift();
@@ -133,7 +136,7 @@ export class FileService {
           tableArr = arrData.map((data, ind) => {
             const obj = new Object();
             headers.map((header, index) => (obj[header] = data[index]));
-            obj['Sr No'] = ind;
+            obj['Sr No'] = ind + 1;
             return obj;
           });
 

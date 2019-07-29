@@ -5,31 +5,22 @@ import {
   OnInit,
   ChangeDetectorRef,
   Input,
-  ViewChild,
-  HostBinding,
   OnDestroy,
   EventEmitter,
   Output
 } from '@angular/core';
-import {
-  MatTableDataSource,
-  MatTabChangeEvent,
-  MatPaginator
-} from '@angular/material';
-import * as path from 'path';
+import { MatTabChangeEvent } from '@angular/material';
 import { ElectronService } from '../../../../providers/electron.service';
 const remote = require('electron').remote;
 const { dialog } = require('electron').remote;
 const { Menu, MenuItem } = remote.require('electron');
 const csv = require('csv-parser');
-import { parse, unparse } from 'papaparse';
-import { checkAndUpdateBinding } from '@angular/core/src/view/util';
+import { unparse } from 'papaparse';
 import { Observable, of } from 'rxjs';
-const { app, globalShortcut } = require('electron');
 import * as $ from 'jquery';
 import { CellValueChangedEvent } from 'ag-grid-community';
 
-let win;
+let WIN;
 
 @Component({
   selector: 'app-csv-layout',
@@ -48,7 +39,6 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
   columnNames = [];
   currentFile: IFile;
   delimiter: string;
-
   IsEdited = false;
   tempDataRow: Observable<Array<any>>;
   tempheaderRow: Observable<Array<any>>;
@@ -63,14 +53,12 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     fileData: undefined
   };
 
-  selectedFile: any;
-
   constructor(
     private electronService: ElectronService,
     private changeDetectorRef: ChangeDetectorRef,
     private fileService: FileService
   ) {}
-  // @ViewChild(MatPaginator) paginator: MatPaginator;
+
   isVisible = false;
 
   onGridReady(params) {
@@ -83,7 +71,6 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
   onAddRow() {
     const newItem = this.fileService.getBlankRow();
     newItem['Sr No'] = this.gridApi.getDisplayedRowCount() + 1;
-    console.log(newItem);
     this.gridApi.updateRowData({ add: [newItem] });
     // printResult(res);
   }
@@ -93,14 +80,13 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     this.gridApi.forEachNode(function(node) {
       rowData.push(node.data);
     });
-    console.log('Row Data:');
-    console.log(rowData);
   }
 
   onRemoveSelected() {
     const selectedData = this.gridApi.getSelectedRows();
     const res = this.gridApi.updateRowData({ remove: selectedData });
-    console.log(res);
+    this.IsEdited = true;
+    this.isGridEdited.emit(this.IsEdited);
   }
   onCellValueChanged(params: CellValueChangedEvent) {
     if (!this.IsEdited) {
@@ -110,6 +96,8 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    WIN = remote.getCurrentWindow();
+
     this.fileService.selectedFiles.subscribe(x => {
       this.tempheaderRow = of([]);
       this.tempDataRow = of([]);
@@ -134,18 +122,18 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     this.dateFiledSet.add('Inactivatie datum -optioneel-');
     this.dateFiledSet.add('NID');
 
-    // this.showDialog();
-    // this.createMenu();
-    // this.fileDropped()
+    this.createContextMenu();
+
     this.electronService.ipcRenderer.on('saveFile', arg => {
       this.getRowData();
-      // this.saveFile();
+      this.saveFile();
+    });
+
+    this.electronService.ipcRenderer.on('reloadFile', arg => {
+      this.laodData(this.currentFile);
     });
   }
-  ngOnDestroy() {
-    console.log('unsubscribe');
-    // this.fileService.selectedFiles.unsubscribe();
-  }
+  ngOnDestroy() {}
   showDialog = () => {
     this.fileService.showDialog();
   }
@@ -154,6 +142,13 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  onQuickFilterChanged(filterValue: string) {
+    this.gridApi.setQuickFilter(filterValue);
+  }
+
+  onSaveClicked = () => {
+    this.saveFile();
+  }
   tabChanged(tabChange: MatTabChangeEvent) {
     if (tabChange !== undefined && tabChange.index >= 0) {
       const selctedFile = this.fileList[tabChange.index];
@@ -176,7 +171,6 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     }, 500);
 
     this.changeDetectorRef.detectChanges();
-    console.log(updateFile);
   }
 
   generateDataForAgGrid = (file: IFile) => {
@@ -191,16 +185,18 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
           filter: index === 0 ? false : true,
           editable: true,
           resizable: true
-          // cellEditor: 'agLargeTextCellEditor',
         };
         if (index === 0) {
           obj['resizabl'] = false;
-          obj['width'] = 70;
+          obj['editable'] = false;
+          obj['headerCheckboxSelection'] = true;
+          obj['headerCheckboxSelectionFilteredOnly'] = true;
+          obj['checkboxSelection'] = true;
+          obj['width'] = 100;
         }
         return obj;
       })
     );
-    this.tempheaderRow.subscribe(c => console.log(c));
     this.tempDataRow = of(file.fileData);
   }
 
@@ -230,58 +226,21 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
       // Placeholder 3
       filters: [{ name: 'csv File', extensions: ['csv'] }]
     };
-
-    const WIN = remote.getCurrentWindow();
     const fileName = dialog.showSaveDialog(WIN, options);
-    const csvData = unparse(this.dataSource.data, {
+    const csvData = unparse(this.dataSource, {
       delimiter: this.delimiter
     });
 
-    console.log(csvData);
-    // this.electronService.fs.writeFile(fileName, csvData, (err) => {
-    //   if (err) {
-    //     alert('An error ocurred updating the file' + err.message);
-    //     console.log(err);
-    //     return;
-    //   }
-    //   alert('The file has been succesfully saved');
-    // });
+    this.electronService.fs.writeFile(fileName, csvData, err => {
+      if (err) {
+        alert('An error ocurred updating the file' + err.message);
+        return;
+      }
+      this.IsEdited = false;
+      this.isGridEdited.emit(false);
+      alert('The file has been saved succesfully.');
+    });
   }
-
-  /* fileDropped = () => {
-    const holder = document.getElementById('drag-file');
-    holder.ondragover = (e: any) => {
-      e.target.classList.add('box-drag-over');
-      return false;
-    };
-
-    holder.ondragleave = (e: any) => {
-      e.target.classList.remove('box-drag-over');
-      return false;
-    };
-
-    // holder.addEventListener('dragenter', function(event) {
-    //     event.target.style.border = '3px dotted red';
-    // });
-
-    holder.ondragend = () => {
-      return false;
-    };
-
-    holder.ondrop = (e: any) => {
-      e.preventDefault();
-      const fileList: File[] = Array.from(e.dataTransfer.files);
-      this.tabGroup = fileList.filter((x: File) => path.extname(x.path) === '.csv').map((y: File) => {
-        return <ITabGroup>{
-          fileName: y.name,
-          filePath: y.path
-        };
-      });
-      console.log(this.tabGroup);
-      this.loadDataFromCSV(this.tabGroup[0]);
-      return false;
-    };
-  } */
 
   createContextMenu = () => {
     // Build menu one item at a time, unlike
@@ -289,9 +248,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
       new MenuItem({
         label: 'Save File As',
         click() {
-          console.log(this);
-          win.webContents.send('saveFile', 'save-file');
-          // this.saveFile();
+          WIN.webContents.send('saveFile', 'save-file');
         }
       })
     );
@@ -301,7 +258,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
       new MenuItem({
         label: 'Reload',
         click() {
-          this.loadDataFromCSV(this.currentFile);
+          WIN.webContents.send('reloadFile', 'reload-file');
         }
       })
     );
