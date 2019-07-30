@@ -1,8 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 export enum EuListType {
-  OPEN_FOLDER,
-  OPEN_FILE,
-  DRAG_AND_DROP
+  OPEN_FOLDER = 'openFile',
+  OPEN_FILE = 'multiSelections',
+  DRAG_AND_DROP = 'dragDrop'
 }
 
 @Component({
@@ -11,20 +11,14 @@ export enum EuListType {
   styleUrls: ['./left-dashboard.component.scss']
 })
 export class LeftDashboardComponent implements OnInit {
-
   @Output() ListItemClicked: EventEmitter<EuListType> = new EventEmitter();
   eListType = EuListType;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   itemClickedHandler = (eve: EuListType) => {
     this.ListItemClicked.emit(eve);
-
   }
 }
-
-
-

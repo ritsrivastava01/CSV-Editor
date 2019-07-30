@@ -70,6 +70,7 @@ export class HomeComponent implements OnInit {
         this.fileService.showDialog(false);
         break;
       case EuListType.OPEN_FOLDER:
+        this.fileService.showDialog(true);
         break;
       case EuListType.DRAG_AND_DROP:
         this.showDragNDropArea = true;
