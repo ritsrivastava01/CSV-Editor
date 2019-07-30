@@ -67,35 +67,35 @@ function createWindow() {
   // createContextMenu(win);
 }
 
-function createContextMenu(win: BrowserWindow) {
-  // Build menu one item at a time, unlike
-  menu.append(
-    new MenuItem({
-      label: 'Save File As',
-      click() {
-        console.log(this);
-        win.webContents.send('saveFile', 'save-file');
-        // this.saveFile();
-      }
-    })
-  );
+// function createContextMenu(win: BrowserWindow) {
+//   // Build menu one item at a time, unlike
+//   menu.append(
+//     new MenuItem({
+//       label: 'Save File As',
+//       click() {
+//         console.log(this);
+//         win.webContents.send('saveFile', 'save-file');
+//         // this.saveFile();
+//       }
+//     })
+//   );
 
-  menu.append(new MenuItem({ type: 'separator' }));
-  menu.append(
-    new MenuItem({
-      label: 'Reload',
-      click() {
-        win.webContents.send('saveFile', 'save-file');
-      }
-    })
-  );
+//   menu.append(new MenuItem({ type: 'separator' }));
+//   menu.append(
+//     new MenuItem({
+//       label: 'Reload',
+//       click() {
+//         win.webContents.send('saveFile', 'save-file');
+//       }
+//     })
+//   );
 
-  // Prevent default action of right click in chromium. Replace with our menu.
-  win.webContents.addListener('contextmenu', e => {
-    e.preventDefault();
-    menu.popup();
-  });
-}
+//   // Prevent default action of right click in chromium. Replace with our menu.
+//   win.webContents.addListener('contextmenu', e => {
+//     e.preventDefault();
+//     menu.popup();
+//   });
+// }
 
 function createMenu() {
   // Other code removed for brevity
