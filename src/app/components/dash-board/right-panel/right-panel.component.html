@@ -1,0 +1,26 @@
+<app-particles></app-particles>
+<div class="container">
+  <div class="welcome" *ngIf="clickedNavigationItem?.id === 1">
+    <!-- <img class="imgborder s2" src="../../../../assets/images/Logo.png" /> -->
+    <!-- <mat-divider [vertical]="true" class="vertical-line"></mat-divider>
+          <img src="../../../../assets/images/ah_logo1.png" /> -->
+    <h1>CSV Editor</h1>
+    <span class="sub-text">Help to yo edit the scv files </span>
+    <button mat-stroked-button>{{ "Read More" | uppercase }}</button>
+    <img class="splitter" src="../../../../assets/images/line.png" />
+    <div class="file-list">
+      <div *ngFor="let file of recentFiles; let ind = index">
+        <img src="../../../../assets/images/csv-file.png" />
+        <div>
+          <span class="link" (click)="loadFile(file)">{{
+            file?.fileName
+          }}</span>
+          <section>[{{ file?.filePath }}]</section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="who-we-are" *ngIf="clickedNavigationItem?.id === 2"></div>
+  <div class="what-we-do" *ngIf="clickedNavigationItem?.id === 3"></div>
+  <div class="get-in-touch" *ngIf="clickedNavigationItem?.id === 4"></div>
+</div>

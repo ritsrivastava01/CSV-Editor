@@ -41,6 +41,7 @@ import { DropAreaComponent } from './components/drop-area/drop-area.component';
 import { FileService } from './providers/file.service';
 import { CsvModule } from './components/csv-module/csv.module';
 import { SharedModule } from './components/shared/shared.module';
+import { DashBoardNewModule } from './components/dash-board/dash-board.module';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -70,10 +71,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatListModule,
     MatIconModule,
     CsvModule,
-    DashboardModule,
+    // DashboardModule,
     MatMenuModule,
     MatProgressBarModule,
     MatGridListModule,
+    DashBoardNewModule,
     SharedModule,
     TranslateModule.forRoot({
       loader: {

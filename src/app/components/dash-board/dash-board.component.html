@@ -1,0 +1,7 @@
+<app-left-panel
+  [navigationItemList]="navigationItems"
+  (navigationItemClicked)="navigationItemClickedHandler($event)"
+></app-left-panel>
+<app-right-panel
+  [clickedNavigationItem]="clickedNavigationItem"
+></app-right-panel>

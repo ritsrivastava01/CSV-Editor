@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { EuListType } from '../left-dashboard/left-dashboard.component';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard-new',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

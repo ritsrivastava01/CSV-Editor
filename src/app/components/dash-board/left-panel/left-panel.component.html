@@ -1,0 +1,10 @@
+<ul>
+  <li
+    (click)="activateNavigationItem(navigationItem)"
+    *ngFor="let navigationItem of navigationItemList"
+    [ngClass]="{ active: navigationItem.isActive }"
+  >
+    {{ navigationItem.label | uppercase }}
+    <div></div>
+  </li>
+</ul>
