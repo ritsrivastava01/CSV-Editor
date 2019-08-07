@@ -1,6 +1,7 @@
+import { EuListType } from './../drop-area/drop-area.component';
 import { FileService, IFile } from './../../../providers/file.service';
 import { INavigationItem } from './../dash-board.component';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-right-panel',
@@ -9,6 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class RightPanelComponent implements OnInit {
   @Input() clickedNavigationItem: INavigationItem;
+  @Output() opneFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
   recentFiles: Array<IFile> = [];
   constructor(private fileService: FileService) {}
 
@@ -19,5 +21,8 @@ export class RightPanelComponent implements OnInit {
 
   loadFile(file: IFile) {
     this.fileService.loadFilesInApplication([file]);
+  }
+  opneFileItemClickedHandler = (evt: EuListType) => {
+    this.opneFileItemClicked.emit(evt);
   }
 }

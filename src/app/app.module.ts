@@ -37,7 +37,6 @@ import {
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from './components/dashboard/dashboard.module';
-import { DropAreaComponent } from './components/drop-area/drop-area.component';
 import { FileService } from './providers/file.service';
 import { CsvModule } from './components/csv-module/csv.module';
 import { SharedModule } from './components/shared/shared.module';
@@ -49,12 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    WebviewDirective,
-    DropAreaComponent
-  ],
+  declarations: [AppComponent, HomeComponent, WebviewDirective],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

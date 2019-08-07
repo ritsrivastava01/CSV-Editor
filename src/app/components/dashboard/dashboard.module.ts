@@ -7,7 +7,7 @@ import { UpperDashboardComponent } from './upper-dashboard/upper-dashboard.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatDividerModule } from '@angular/material';
 import { TransformFileNamePipe } from '../../pipes/transform-file-name.pipe';
-
+import { DropAreaComponent } from '../dash-board/drop-area/drop-area.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +15,7 @@ import { TransformFileNamePipe } from '../../pipes/transform-file-name.pipe';
     LeftDashboardComponent,
     RightDashboardComponent,
     UpperDashboardComponent,
+    DropAreaComponent,
     TransformFileNamePipe
   ],
   imports: [CommonModule, MatDividerModule, SharedModule],

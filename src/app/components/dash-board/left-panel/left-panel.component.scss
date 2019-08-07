@@ -35,9 +35,11 @@
       cursor: pointer;
 
       div {
+        background: url("assets/images/line.png") no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
         background-size: cover;
-        background-repeat: no-repeat;
-        background: url("assets/images/line.png");
       }
     }
     & .active {
@@ -45,9 +47,11 @@
       cursor: pointer;
 
       div {
+        background: url("assets/images/line.png") no-repeat center center;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
         background-size: cover;
-        background-repeat: no-repeat;
-        background: url("assets/images/line.png");
       }
     }
   }

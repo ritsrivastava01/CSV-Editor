@@ -63,7 +63,9 @@ function createWindow() {
     win = null;
   });
 
-  createMenu();
+  //createMenu();
+
+  // NOT IN USE
   // createContextMenu(win);
 }
 

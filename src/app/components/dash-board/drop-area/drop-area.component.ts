@@ -1,4 +1,5 @@
-import { FileService } from './../../providers/file.service';
+import { IFile, FileService } from './../../../providers/file.service';
+
 import {
   Component,
   OnInit,
@@ -6,8 +7,14 @@ import {
   EventEmitter,
   ChangeDetectorRef
 } from '@angular/core';
-import { IFile } from '../../providers/file.service';
+
 import * as path from 'path';
+export enum EuListType {
+  OPEN_FOLDER = 'openFile',
+  OPEN_FILE = 'multiSelections',
+  DRAG_AND_DROP = 'dragDrop'
+}
+
 
 @Component({
   selector: 'app-drop-area',
@@ -15,7 +22,10 @@ import * as path from 'path';
   styleUrls: ['./drop-area.component.scss']
 })
 export class DropAreaComponent implements OnInit {
-  @Output() cancelClicked: EventEmitter<boolean> = new EventEmitter();
+ // @Output() cancelClicked: EventEmitter<boolean> = new EventEmitter();
+ @Output() OpneFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
+ eListType = EuListType;
+
   files: Array<IFile> = [];
   value = 20;
   constructor(
@@ -23,12 +33,13 @@ export class DropAreaComponent implements OnInit {
     private fileService: FileService
   ) {}
 
+  buttonClickedHandler = (eve: EuListType) => {
+    this.OpneFileItemClicked.emit(eve);
+  }
   ngOnInit() {
     this.fileDropped();
   }
-  cancelClick = () => {
-    this.cancelClicked.emit(true);
-  }
+ 
 
   fileDropped = () => {
     const holder = document.getElementById('drag-file');

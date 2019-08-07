@@ -1,0 +1,9 @@
+<div class="upload-files" id="drag-file">
+  <!-- <mat-icon aria-label="Example icon-button with a heart icon" (click)="cancelClick()">cancel</mat-icon> -->
+  <button mat-stroked-button (click)="buttonClickedHandler(eListType.OPEN_FOLDER)">{{ "Upload Files" | uppercase }}</button>
+  <span class="mat-title">Or Drag and drop the file here!</span>
+  <span class="mat-small">(you can drop maximum 5 csv files here)</span>
+  <div class="csv-progress-bar" *ngIf="files.length > 0">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</div>

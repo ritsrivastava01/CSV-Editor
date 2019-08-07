@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  justify-content: center;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+
+    .email {
+      background-color: #ffffff26;
+      padding: 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      div {
+        background-image: url("assets/images/email.svg");
+        height: 50px;
+        width: 50px;
+        background-size: 100% 100%;
+      }
+      &:hover {
+        background-color: #ffffff4a;
+      }
+    }
+    .github {
+      background-color: #ffffff26;
+      padding: 20px;
+      border-radius: 50px;
+      cursor: pointer;
+
+      div {
+        background-image: url("assets/images/github.svg");
+        height: 50px;
+        width: 50px;
+        background-size: 100% 100%;
+      }
+      &:hover {
+        background-color: #ffffff4a;
+      }
+    }
+  }
+}
