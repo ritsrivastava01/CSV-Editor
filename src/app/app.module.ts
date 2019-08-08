@@ -36,7 +36,6 @@ import {
 } from '@angular/material';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DashboardModule } from './components/dashboard/dashboard.module';
 import { FileService } from './providers/file.service';
 import { CsvModule } from './components/csv-module/csv.module';
 import { SharedModule } from './components/shared/shared.module';

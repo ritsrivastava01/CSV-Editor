@@ -7,10 +7,10 @@
     <h1>CSV Editor</h1>
     <span class="sub-text">Help to yo edit the scv files </span>
     <button mat-stroked-button>{{ "Read More" | uppercase }}</button>
-    <img class="splitter" src="../../../../assets/images/line.png" />
+    <img class="splitter" src="assets/images/line.png" />
     <div class="file-list">
       <div *ngFor="let file of recentFiles; let ind = index">
-        <img src="../../../../assets/images/csv-file.png" />
+        <img src="assets/images/csv-file.png" />
         <div>
           <span class="link" (click)="loadFile(file)">{{
             file?.fileName
@@ -22,9 +22,7 @@
   </div>
   <div class="what-we-do" *ngIf="clickedNavigationItem?.id === 2"></div>
   <div class="upload-files-container" *ngIf="clickedNavigationItem?.id === 3">
-    <app-drop-area
-      (OpneFileItemClicked)="opneFileItemClickedHandler($event)"
-    ></app-drop-area>
+    <app-drop-area (OpneFileItemClicked)="opneFileItemClickedHandler($event)"></app-drop-area>
 
   </div>
   <div class="get-in-touch" *ngIf="clickedNavigationItem?.id === 4">

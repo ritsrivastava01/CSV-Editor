@@ -106,7 +106,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
       if (this.fileList.length > 0) {
         this.fileService.loadDataFromCSV(this.fileList[0]);
         if (!this.fileList[0].fileData) {
-          this.laodData(this.fileList[0]);
+          this.loadCSVFile(this.fileList[0]);
           this.isVisible = true;
         }
       } else {
@@ -115,12 +115,14 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
       this.changeDetectorRef.detectChanges();
     });
 
+    // NOT IN USE
+    /*
     this.dateFiledSet.add('Agreement datum');
     this.dateFiledSet.add('Ingangsdatum');
     this.dateFiledSet.add('Inactivatie datum');
     this.dateFiledSet.add('Datum afsluiten agreement');
     this.dateFiledSet.add('Inactivatie datum -optioneel-');
-    this.dateFiledSet.add('NID');
+    this.dateFiledSet.add('NID'); */
 
     this.createContextMenu();
 
@@ -130,7 +132,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     });
 
     this.electronService.ipcRenderer.on('reloadFile', arg => {
-      this.laodData(this.currentFile);
+      this.loadCSVFile(this.currentFile);
     });
   }
   ngOnDestroy() {}
@@ -151,12 +153,12 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
   }
   tabChanged(tabChange: MatTabChangeEvent) {
     if (tabChange !== undefined && tabChange.index >= 0) {
-      const selctedFile = this.fileList[tabChange.index];
-      if (!selctedFile.fileData) {
+      const selectedFile = this.fileList[tabChange.index];
+      if (!selectedFile.fileData) {
         // this.setCsvData(this.dummyFile);
-        this.laodData(selctedFile);
+        this.loadCSVFile(selectedFile);
       } else {
-        this.setCsvData(selctedFile);
+        this.setCsvData(selectedFile);
       }
     }
   }
@@ -200,7 +202,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     this.tempDataRow = of(file.fileData);
   }
 
-  laodData(file: IFile) {
+  loadCSVFile = (file: IFile) => {
     this.fileService.loadDataFromCSV(file).subscribe((updateFile: IFile) => {
       this.currentFile = updateFile;
       file = updateFile;
@@ -208,9 +210,9 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  showDateField = (filedName): boolean => {
-    return this.dateFiledSet.has(filedName);
-  }
+  // showDateField = (filedName): boolean => {
+  //   return this.dateFiledSet.has(filedName);
+  // }
 
   saveFile = () => {
     const options = {
@@ -238,7 +240,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
       }
       this.IsEdited = false;
       this.isGridEdited.emit(false);
-      alert('The file has been saved succesfully.');
+      alert('The file has been saved successfully.');
     });
   }
 

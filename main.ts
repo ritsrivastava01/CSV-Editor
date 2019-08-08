@@ -31,7 +31,7 @@ function createWindow() {
     y: 0,
     width: size.width - 200,
     height: size.height - 200,
-    icon: __dirname + 'assets/icons/win/64x64.png',
+    icon: `file://${__dirname}/dist/assets/icons/png/64x64.png`,
     webPreferences: {
       nodeIntegration: true
     }
@@ -63,9 +63,7 @@ function createWindow() {
     win = null;
   });
 
-  //createMenu();
-
-  // NOT IN USE
+  createMenu();
   // createContextMenu(win);
 }
 

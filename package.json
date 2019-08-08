@@ -2,7 +2,7 @@
   "name": "csv-editor",
   "productName": "CSV Editor",
   "version": "1.0.0",
-  "description": "Nice and awasome look for CSV Editor based on Angualr and Electron",
+  "description": "Nice and awesome look for CSV Editor based on Angualr and Electron",
   "author": {
     "name": "Ritesh Srivastava",
     "email": "ritsrivastava@gmail.com"
@@ -36,9 +36,8 @@
     "test": "npm run postinstall:web && ng test",
     "e2e": "npm run build:prod && mocha --timeout 300000 --require ts-node/register e2e/**/*.spec.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-    "package-win": "electron-packager . csv-editor --overwrite --asar=true --platform=win64 --arch=ia64 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"CSV Editor\"",
-    "package-linux": "electron-packager . csv-editor --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds",
+    "electron": "electron .",
+    "electron-build": "ng build --prod && electron .",
     "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/"
   },
   "devDependencies": {
