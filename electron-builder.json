@@ -1,5 +1,5 @@
 {
-  "productName": "angular-electron",
+  "productName": "csv-Editor",
   "directories": {
     "output": "release/"
   },
@@ -22,7 +22,7 @@
   "win": {
     "icon": "dist",
     "target": [
-      "portable"
+      "nsis"
     ]
   },
   "mac": {

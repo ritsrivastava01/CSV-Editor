@@ -37,8 +37,10 @@
     "e2e": "npm run build:prod && mocha --timeout 300000 --require ts-node/register e2e/**/*.spec.ts",
     "version": "conventional-changelog -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "electron": "electron .",
-    "electron-build": "ng build --prod && electron .",
-    "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/"
+    "electron-build": "ng build --prod && electron . MyApp",
+    "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/",
+	"build2": "electron-packager ./dist --icon=src/assets/icons/win/icon.ico --out=release-builds"
+	
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.12.1",
