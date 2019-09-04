@@ -1,0 +1,49 @@
+{
+  "page": {
+    "right-panel": {
+      "title": "CSV Editor",
+      "sub-title": "Gemakkelijke manier om CSV's te bewerken",
+      "read-more": "Lees verder"
+    },
+    "left-panel": {
+      "welcome": "welkom",
+      "what-we-do": "wat we doen",
+      "upload-files": "Upload files",
+      "get-in-touch": "Neem contact op"
+    },
+    "upload": {
+      "upload-files": "Upload files",
+      "drag-text": "Of sleep het bestand hiernaartoe!",
+      "limit-text": "CSV Editor ondersteunt maximaal 5 bestanden"
+    },
+    "intro": {
+      "great-design": "Geweldig Ontwerpn",
+      "introApp": "Deze applicatie heeft een geweldig uiterlijk voor het bewerken van de CSV. U kunt alle recente bestanden vinden en opnieuw gebruiken met slechts één klik. Het ondersteunt ook meertalig en thema.",
+      "handy-to-Edit": "Handig om CSV's te bewerken",
+      "easy-to-use-text1": "Het komt ook met alle functies van",
+      "easy-to-use-text2": "onder de community-ondersteuning. We kunnen de kolom herschikken, op elke kolom sorteren toepassen, het filter op de gegevens toepassen, het ondersteunt ook om een nieuw record te bewerken / verwijderen / toevoegen. . ",
+      "eenvoudig te uploaden": "Eenvoudig te uploaden",
+      "easy-to-upload-text": "CSV Editor kan tot 5 bestanden tegelijkertijd bewerken. Het komt ook met drag & drop-functie, u kunt eenvoudig 5 bestanden slepen of neerzetten OF hetzelfde bestand uploaden door op de uploadknop te klikken ."
+    },
+    "contact-us": {
+      "feedback": "Terugkoppeling",
+      "find-us": "Vind ons"
+    }
+  },
+  "header": {
+    "upload-csv": "CSV uploaden",
+    "github": "GitHub"
+  },
+  "scv-editor": {
+    "save": "CSV opslaan",
+    "remove-selected": "Selectie verwijderen",
+    "add-row": "Rij toevoegen",
+    "text-placeholder": "Gegevens filteren op de CSV",
+    "save-as-window-title": "Opslaan als",
+    "save-as-window-button-text": "CSV-bestand opslaan",
+    "error-while-saving": "Er is een fout opgetreden bij het bijwerken van het bestand",
+    "save-message": "Het bestand is succesvol opgeslagen.",
+    "menu-save-as": "Bestand opslaan als",
+    "reload": "Vernieuwen"
+  }
+}

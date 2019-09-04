@@ -2,7 +2,7 @@
   "page": {
     "right-panel": {
       "title": "CSV Editor",
-      "sub-title": "Easy wat to edit CSVs",
+      "sub-title": "Easy way to edit CSVs",
       "read-more": "Read More"
     },
     "left-panel": {
@@ -18,9 +18,9 @@
     },
     "intro": {
       "great-design": "Great Design",
-      "introApp": "  This application comes with great looks for edit the CSV. You can find all recent files and use it again on just one click. It also support multilingual and theme.",
+      "introApp": "  This application comes with great looks for edit the CSV. You can find all recent files and use it again on just one click. It also supports multilingual and theme.",
       "handy-to-Edit": "Handy to Edit CSVs",
-      "easy-to-use-text1": " It also come with all feature provided by ",
+      "easy-to-use-text1": " It also comes with all feature provided by ",
       "easy-to-use-text2": " under the community support. We can rearrange the column, apply sort on any column, apply the filter on the data, also, it supports to Edit/Remove/Add a new record as well.",
       "easy-to-upload": "Easy to upload",
       "easy-to-upload-text": "  CSV Editor can edit up to 5 files at the same. It also comes with drag and drops feature, you can easily drag and drop 5 files OR upload the same file by clicking the upload button."

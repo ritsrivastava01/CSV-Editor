@@ -1,5 +1,15 @@
 <app-particles></app-particles>
+<div class="drop-down">
+    <button mat-button [matMenuTriggerFor]="menu">{{ selectedLanguage?.name }}</button>
+    <!-- USed to show the language option -->
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item *ngFor="let item of languages" (click)="changeLanguage(item)">
+        {{ item.name }}
+      </button>
+    </mat-menu>
+  </div>
 <div class="container">
+ 
   <!--Welcome div-->
   <div class="welcome" *ngIf="clickedNavigationItem?.id === 1">
     <h1>{{ "page.right-panel.title" | translate }}</h1>
@@ -25,7 +35,7 @@
   </div>
 
   <!--Drop Area div-->
-  <div class="upload-files-container" *ngIf="clickedNavigationItem?.id === 3">
+  <div class="upload-files" *ngIf="clickedNavigationItem?.id === 3">
     <app-drop-area (OpenFileItemClicked)="openFileItemClickedHandler($event)"></app-drop-area>
   </div>
 

@@ -4,6 +4,13 @@
   justify-content: center;
   align-items: center;
 
+  .drop-down {
+    color: #fff;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 99;
+  }
   .container {
     position: fixed;
     height: 100%;
@@ -78,8 +85,10 @@
         }
       }
     }
-
-    .upload-files-container {
+    .what-we-do {
+      display: flex;
+    }
+    .upload-files {
       height: 55%;
     }
   }

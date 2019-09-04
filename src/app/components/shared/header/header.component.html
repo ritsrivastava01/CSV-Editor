@@ -17,8 +17,7 @@
   </button>
 
   <app-theme-picker></app-theme-picker>
-  <!--<mat-icon aria-label="Example icon-button with a heart icon" >settings</mat-icon>-->
-  <button mat-button [matMenuTriggerFor]="menu">{{ selectedLanguage }}</button>
+  <button mat-button [matMenuTriggerFor]="menu">{{ selectedLanguage?.name }}</button>
   <!-- USed to show the language option -->
   <mat-menu #menu="matMenu">
     <button mat-menu-item *ngFor="let item of languages" (click)="changeLanguage(item)">

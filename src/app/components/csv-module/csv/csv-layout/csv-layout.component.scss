@@ -19,7 +19,7 @@
     padding-top: 10px;
 
     mat-form-field {
-      width: 60%;
+      width: 50%;
     }
     .div-buttons {
       justify-content: flex-end;
@@ -48,10 +48,10 @@
       justify-content: space-evenly;
       width: 100%;
 
-      .possition {
-        min-width: 70px !important;
-        max-width: 70px !important;
-      }
+      // .possition {
+      //   min-width: 70px !important;
+      //   max-width: 70px !important;
+      // }
       .example-full-width {
         width: 150px;
         border: 1px solid #bbb4af;
