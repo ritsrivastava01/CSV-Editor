@@ -1,7 +1,7 @@
+import { INavigationItem, LeftNavigationService } from './../services/left-navigation.service';
 import { EuListType } from './../drop-area/drop-area.component';
 import { FileService, IFile } from './../../../providers/file.service';
-import { INavigationItem } from './../dash-board.component';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-right-panel',
@@ -9,20 +9,28 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./right-panel.component.scss']
 })
 export class RightPanelComponent implements OnInit {
-  @Input() clickedNavigationItem: INavigationItem;
-  @Output() opneFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
+  clickedNavigationItem: INavigationItem = this.leftNavService.navigationItems[0];
+
+  @Output() openFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
   recentFiles: Array<IFile> = [];
-  constructor(private fileService: FileService) {}
+
+  constructor(private fileService: FileService, private leftNavService: LeftNavigationService) {
+    this.leftNavService.activeNavigationItemObservable.subscribe(x => {
+      this.clickedNavigationItem = x;
+    });
+  }
 
   ngOnInit() {
     this.recentFiles = this.fileService.getRecentSavedFiles();
-    console.log(this.recentFiles);
+  }
+  readMoreClicked = () => {
+    this.leftNavService.LeftNavigationClicked(this.leftNavService.navigationItems.find(x => x.id === 2));
   }
 
   loadFile(file: IFile) {
     this.fileService.loadFilesInApplication([file]);
   }
-  opneFileItemClickedHandler = (evt: EuListType) => {
-    this.opneFileItemClicked.emit(evt);
+  openFileItemClickedHandler = (evt: EuListType) => {
+    this.openFileItemClicked.emit(evt);
   }
 }

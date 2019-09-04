@@ -39,8 +39,7 @@
     "electron": "electron .",
     "electron-build": "ng build --prod && electron . MyApp",
     "setup": "electron-installer-windows --src dist/app-win32-x64/ --dest dist/installers/",
-	"build2": "electron-packager ./dist --icon=src/assets/icons/win/icon.ico --out=release-builds"
-	
+    "build2": "electron-packager ./dist --icon=src/assets/icons/win/icon.ico --out=release-builds"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.12.1",

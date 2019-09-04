@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CsvHeaderComponent } from './csv-header.component';
+import { WhatWeCanDoComponent } from './what-we-can-do.component';
 
-describe('CsvHeaderComponent', () => {
-  let component: CsvHeaderComponent;
-  let fixture: ComponentFixture<CsvHeaderComponent>;
+describe('WhatWeCanDoComponent', () => {
+  let component: WhatWeCanDoComponent;
+  let fixture: ComponentFixture<WhatWeCanDoComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CsvHeaderComponent ]
+      declarations: [ WhatWeCanDoComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CsvHeaderComponent);
+    fixture = TestBed.createComponent(WhatWeCanDoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

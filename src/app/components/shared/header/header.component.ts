@@ -1,6 +1,7 @@
 import { FileService } from './../../../providers/file.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+const shell = require('electron').shell;
 
 @Component({
   selector: 'app-header',
@@ -12,14 +13,14 @@ export class HeaderComponent implements OnInit {
   selectedLanguage = 'English';
   @Output() goToHomeClicked = new EventEmitter();
 
-  constructor(
-    private translateService: TranslateService,
-    private fileService: FileService
-  ) {}
+  constructor(private translateService: TranslateService, private fileService: FileService) {}
 
   ngOnInit() {
     this.languages.push(<ILanguage>{ name: 'English', code: 'en' });
     this.languages.push(<ILanguage>{ name: 'Dutch', code: 'nl' });
+  }
+  openURL() {
+    shell.openExternal('https://github.com/ritsrivastava01/CSV-Editor');
   }
 
   /**

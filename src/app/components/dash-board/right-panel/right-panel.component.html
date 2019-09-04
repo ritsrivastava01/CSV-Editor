@@ -1,30 +1,35 @@
 <app-particles></app-particles>
 <div class="container">
+  <!--Welcome div-->
   <div class="welcome" *ngIf="clickedNavigationItem?.id === 1">
-    <!-- <img class="imgborder s2" src="../../../../assets/images/Logo.png" /> -->
-    <!-- <mat-divider [vertical]="true" class="vertical-line"></mat-divider>
-          <img src="../../../../assets/images/ah_logo1.png" /> -->
-    <h1>CSV Editor</h1>
-    <span class="sub-text">Help to yo edit the scv files </span>
-    <button mat-stroked-button>{{ "Read More" | uppercase }}</button>
+    <h1>{{ "page.right-panel.title" | translate }}</h1>
+    <span class="sub-text">{{ "page.right-panel.sub-title" | translate }}</span>
+    <button mat-stroked-button (click)="readMoreClicked()">
+      {{ "page.right-panel.read-more" | translate | uppercase }}
+    </button>
     <img class="splitter" src="assets/images/line.png" />
     <div class="file-list">
-      <div *ngFor="let file of recentFiles; let ind = index">
+      <div *ngFor="let file of recentFiles; let ind = index" (click)="loadFile(file)">
         <img src="assets/images/csv-file.png" />
         <div>
-          <span class="link" (click)="loadFile(file)">{{
-            file?.fileName
-          }}</span>
+          <span class="link">{{ file?.fileName }}</span>
           <section>[{{ file?.filePath }}]</section>
         </div>
       </div>
     </div>
   </div>
-  <div class="what-we-do" *ngIf="clickedNavigationItem?.id === 2"></div>
-  <div class="upload-files-container" *ngIf="clickedNavigationItem?.id === 3">
-    <app-drop-area (OpneFileItemClicked)="opneFileItemClickedHandler($event)"></app-drop-area>
 
+  <!--Intro div-->
+  <div class="what-we-do" *ngIf="clickedNavigationItem?.id === 2">
+    <app-what-we-can-do></app-what-we-can-do>
   </div>
+
+  <!--Drop Area div-->
+  <div class="upload-files-container" *ngIf="clickedNavigationItem?.id === 3">
+    <app-drop-area (OpenFileItemClicked)="openFileItemClickedHandler($event)"></app-drop-area>
+  </div>
+
+  <!--Contact us div-->
   <div class="get-in-touch" *ngIf="clickedNavigationItem?.id === 4">
     <app-contact-us></app-contact-us>
   </div>

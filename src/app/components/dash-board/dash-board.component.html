@@ -1,8 +1,2 @@
-<app-left-panel
-  [navigationItemList]="navigationItems"
-  (navigationItemClicked)="navigationItemClickedHandler($event)"
-></app-left-panel>
-<app-right-panel
-  [clickedNavigationItem]="clickedNavigationItem"
-  (opneFileItemClicked)=opneFileItemClickedHandler($event)
-></app-right-panel>
+<app-left-panel></app-left-panel>
+<app-right-panel (openFileItemClicked)="openFileItemClickedHandler($event)"></app-right-panel>

@@ -54,8 +54,14 @@
     align-items: center;
     flex-direction: column;
     height: 100%;
+
+    img {
+      width: 250px;
+      filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+    }
+
     button {
-      margin-top: 30px;
+      margin: 10px 0 20px 0;
       color: #fff;
       border-color: #b496bc;
       border-radius: 50px;
@@ -65,8 +71,8 @@
     }
     span {
       color: #b496bc;
-      padding-top: 30px;
       filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+      margin: 0;
     }
   }
 }

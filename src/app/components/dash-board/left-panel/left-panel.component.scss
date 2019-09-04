@@ -20,38 +20,48 @@
       font-weight: bold;
       padding-bottom: 10px;
       align-items: flex-end;
-      div {
+
+      span {
+        transition: margin-right ease 0.5s;
+      }
+
+      .line-normal {
         margin-top: 15px;
         height: 2px;
         width: 100%;
-        display: inline-block;
-        background: url("assets/images/line_normal.png");
-        background-size: cover;
-        background-repeat: no-repeat;
+      }
+      .line-hover {
+        margin-top: 15px;
+        height: 2px;
+        width: 100%;
+        display: none;
       }
     }
     & :hover {
       color: #fff;
       cursor: pointer;
 
-      div {
-        background: url("assets/images/line.png") no-repeat center center;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
+      span {
+        margin-right: 20px;
+      }
+      .line-normal {
+        display: none;
+      }
+      .line-hover {
+        display: block;
       }
     }
     & .active {
       color: #fff;
       cursor: pointer;
-
-      div {
-        background: url("assets/images/line.png") no-repeat center center;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
+      span {
+        margin-right: 20px;
+      }
+      .line-normal {
+        display: none;
+      }
+      .line-hover {
+        display: block;
       }
     }
   }

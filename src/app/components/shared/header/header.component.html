@@ -9,11 +9,11 @@
   <!-- This fills the remaining space of the current row -->
   <span class="example-fill-remaining-space"></span>
   <button mat-button (click)="uploadCsvClicked()">
-    Upload SCV
+    {{ "header.upload-csv" | translate | uppercase }}
   </button>
-  <button mat-button>
-    <img src="../../../assets/images/github.svg" />
-    GitHub
+  <button mat-button (click)="openURL()">
+    <img src="assets/images/github.svg" />
+    {{ "header.github" | translate }}
   </button>
 
   <app-theme-picker></app-theme-picker>
@@ -21,11 +21,7 @@
   <button mat-button [matMenuTriggerFor]="menu">{{ selectedLanguage }}</button>
   <!-- USed to show the language option -->
   <mat-menu #menu="matMenu">
-    <button
-      mat-menu-item
-      *ngFor="let item of languages"
-      (click)="changeLanguage(item)"
-    >
+    <button mat-menu-item *ngFor="let item of languages" (click)="changeLanguage(item)">
       {{ item.name }}
     </button>
   </mat-menu>

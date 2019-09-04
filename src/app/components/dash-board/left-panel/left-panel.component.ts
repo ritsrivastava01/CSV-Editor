@@ -1,6 +1,7 @@
-import { InitialNavigation } from '@angular/router/src/router_module';
-import { INavigationItem } from './../dash-board.component';
+import { INavigationItem, LeftNavigationService } from './../services/left-navigation.service';
+
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-left-panel',
@@ -8,20 +9,17 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./left-panel.component.scss']
 })
 export class LeftPanelComponent {
-  @Input() navigationItemList: INavigationItem[] = [];
-  @Output() navigationItemClicked: EventEmitter<
-    INavigationItem
-  > = new EventEmitter<INavigationItem>();
+  navigationItemList: INavigationItem[] = [];
 
-  constructor() {}
-
-  activateNavigationItem = (navigatiohnItem: INavigationItem) => {
-    this.navigationItemList.map(x => {
-      x.isActive = x.id === navigatiohnItem.id ? true : false;
+  constructor(private leftNavService: LeftNavigationService) {
+    this.leftNavService.navigationItemsObservable.subscribe(x => {
+      this.navigationItemList = x;
     });
 
-    this.navigationItemClicked.emit(
-      this.navigationItemList.find(x => x.isActive)
-    );
+    this.leftNavService.LeftNavigationClicked(this.leftNavService.navigationItems[0]);
+  }
+
+  activateNavigationItem = (navigationItem: INavigationItem) => {
+    this.leftNavService.LeftNavigationClicked(navigationItem);
   }
 }

@@ -1,10 +1,18 @@
 <div class="container">
-  <div class="email">
-    <div></div>
-  
-  </div>
-  <div class="github">
+  <!-- <div class="email">
     <div></div>
     
+  </div> -->
+  <div class="email">
+    <a href="mailto:ritsrivastava@gmail.com?subject=CSV-Editor - Feedback">
+      <div></div>
+    </a>
+    <span>{{ "page.contact-us.feedback" | translate }} </span>
+  </div>
+  <div class="github">
+    <a (click)="openURL()">
+      <div></div>
+    </a>
+    <span>{{ "page.contact-us.find-us" | translate }}</span>
   </div>
 </div>

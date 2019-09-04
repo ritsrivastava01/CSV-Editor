@@ -1,0 +1,49 @@
+:host {
+  .container {
+    padding-top: 40px;
+    .flex {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding-bottom: 50px;
+    }
+    .txt-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: right;
+    }
+    .right {
+      padding-right: 20px;
+      text-align: right;
+    }
+
+    .left {
+      padding-left: 20px;
+      text-align: left;
+      img {
+        transform: rotate(180deg);
+      }
+    }
+    .splitter {
+      padding: 10px 0 10px 0;
+      height: 1px;
+      width: 100%;
+    }
+    .mat-h1 {
+      font-size: 35px;
+      filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+      color: #fff;
+      padding: 0px;
+      margin: 0px;
+    }
+    .sub-text {
+      color: #b496bc;
+      filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+    }
+    img {
+      width: 300px;
+      filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.5));
+      border-radius: 10px;
+    }
+  }
+}

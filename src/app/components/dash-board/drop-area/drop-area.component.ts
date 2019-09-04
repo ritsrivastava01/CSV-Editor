@@ -1,12 +1,6 @@
 import { IFile, FileService } from './../../../providers/file.service';
 
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  ChangeDetectorRef
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 import * as path from 'path';
 export enum EuListType {
@@ -15,31 +9,26 @@ export enum EuListType {
   DRAG_AND_DROP = 'dragDrop'
 }
 
-
 @Component({
   selector: 'app-drop-area',
   templateUrl: './drop-area.component.html',
   styleUrls: ['./drop-area.component.scss']
 })
 export class DropAreaComponent implements OnInit {
- // @Output() cancelClicked: EventEmitter<boolean> = new EventEmitter();
- @Output() OpneFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
- eListType = EuListType;
+  @Output() OpenFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
+  eListType = EuListType;
 
   files: Array<IFile> = [];
   value = 20;
-  constructor(
-    private changeDetectorRef: ChangeDetectorRef,
-    private fileService: FileService
-  ) {}
+  constructor(private changeDetectorRef: ChangeDetectorRef, private fileService: FileService) {}
 
   buttonClickedHandler = (eve: EuListType) => {
-    this.OpneFileItemClicked.emit(eve);
+    this.OpenFileItemClicked.emit(eve);
   }
+
   ngOnInit() {
     this.fileDropped();
   }
- 
 
   fileDropped = () => {
     const holder = document.getElementById('drag-file');
@@ -64,18 +53,22 @@ export class DropAreaComponent implements OnInit {
     holder.ondrop = (e: any) => {
       e.preventDefault();
       const fileList: File[] = Array.from(e.dataTransfer.files);
-      this.files = fileList
-        .filter((x: File) => path.extname(x.path) === '.csv')
-        .map((y: File) => {
-          this.changeDetectorRef.detectChanges();
-          return <IFile>{
-            fileName: y.name,
-            filePath: y.path
-          };
-        });
-      this.fileService.loadFilesInApplication(this.files);
-      // this.fileService.loadDataFromCSV(this.files[0]);
-      return false;
+      if (fileList.length <= 5) {
+        this.files = fileList
+          .filter((x: File) => path.extname(x.path) === '.csv')
+          .map((y: File) => {
+            this.changeDetectorRef.detectChanges();
+            return <IFile>{
+              fileName: y.name,
+              filePath: y.path
+            };
+          });
+        this.fileService.loadFilesInApplication(this.files);
+        return false;
+      } else {
+        alert('CSV Editor can support 5 files maximum at a time');
+        return false;
+      }
     };
   }
 }

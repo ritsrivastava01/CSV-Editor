@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+const shell = require('electron').shell;
 
 @Component({
   selector: 'app-contact-us',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact-us.component.scss']
 })
 export class ContactUsComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
+  ngOnInit() {}
+  openURL() {
+    shell.openExternal('https://github.com/ritsrivastava01/CSV-Editor');
   }
-
 }

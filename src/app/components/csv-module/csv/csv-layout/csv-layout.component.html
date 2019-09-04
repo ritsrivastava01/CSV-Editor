@@ -1,30 +1,42 @@
-<mat-tab-group (selectedTabChange)="tabChanged($event)" (click)="tabChanged($event)"
-  [ngClass]="{ 'add-padding': isVisible }">
+<mat-tab-group (selectedTabChange)="tabChanged($event)" (click)="tabChanged($event)" [ngClass]="{ 'add-padding': isVisible }">
   <mat-tab label="{{ tab.fileName }}" *ngFor="let tab of fileList">
     {{ tab.fileName }}
     <ng-template matTabContent>
       <div class="div-options">
         <mat-form-field>
-          <input matInput (input)="onQuickFilterChanged($event.target.value)" placeholder="Filter data on the CSV" />
+          <input matInput (input)="onQuickFilterChanged($event.target.value)" placeholder="{{ 'scv-editor.text-placeholder' | translate }}" />
         </mat-form-field>
         <div class="div-buttons">
           <button mat-stroked-button color="primary" (click)="onSaveClicked()">
-            Save CSV
+            {{ "scv-editor.save" | translate }}
           </button>
           <button mat-stroked-button color="primary" (click)="onRemoveSelected()">
-            Remove Selected
+            {{ "scv-editor.remove-selected" | translate }}
           </button>
           <button mat-stroked-button color="primary" (click)="onAddRow()">
-            Add Row
+            {{ "scv-editor.add-row" | translate }}
           </button>
         </div>
       </div>
       <div class="table-container">
-        <ag-grid-angular style=" height: 95%; width:100%" class="ag-theme-balham" [singleClickEdit]="true"
-          [rowData]="tempDataRow | async" [stopEditingWhenGridLosesFocus]="true" [paginationPageSize]="20"
-          [columnDefs]="tempheaderRow | async" [pagination]="true" [rowDragManaged]="true" [animateRows]="true"
-          [suppressRowClickSelection]="true" [rowData]="rowData" [rowSelection]="rowSelection" [getRowHeight]="80"
-          (gridReady)="onGridReady($event)" (cellValueChanged)="onCellValueChanged($event)">
+        <ag-grid-angular
+          style=" height: 95%; width:100%"
+          class="ag-theme-balham"
+          [singleClickEdit]="true"
+          [rowData]="tempDataRow | async"
+          [stopEditingWhenGridLosesFocus]="true"
+          [paginationPageSize]="20"
+          [columnDefs]="headerRow | async"
+          [pagination]="true"
+          [rowDragManaged]="true"
+          [animateRows]="true"
+          [suppressRowClickSelection]="true"
+          [rowData]="rowData"
+          [rowSelection]="rowSelection"
+          [getRowHeight]="80"
+          (gridReady)="onGridReady($event)"
+          (cellValueChanged)="onCellValueChanged($event)"
+        >
         </ag-grid-angular>
       </div>
     </ng-template>
