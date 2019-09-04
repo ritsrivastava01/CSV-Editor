@@ -31,6 +31,7 @@ export class ParticlesComponent implements AfterViewInit, OnDestroy {
   context: CanvasRenderingContext2D;
   particlesList: SingleParticle[] = [];
   animating = true;
+  particleColor: '#b496bc';
   @ViewChild('particles') particlesCanvas: ElementRef;
 
   constructor() {}
@@ -93,7 +94,7 @@ export class ParticlesComponent implements AfterViewInit, OnDestroy {
   }
 
   draw(p: SingleParticle) {
-    this.context.fillStyle = 'rgba(255,255,255, 1)';
+    this.context.fillStyle = 'rgba(180, 150,188, 1)';
     this.context.beginPath();
     this.context.arc(p.x, p.y, this.size, 0, Math.PI * 2, false);
     this.context.closePath();
@@ -176,7 +177,7 @@ export class ParticlesComponent implements AfterViewInit, OnDestroy {
     const dist = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
     if (dist <= this.linkDistance) {
       if (0.7 - dist / (1 / 0.7) / this.linkDistance > 0) {
-        this.context.strokeStyle = 'rgba(255, 255,255, .2)';
+        this.context.strokeStyle = 'rgba(180, 150,188, .2)';
         this.context.lineWidth = this.linkWidth;
         this.context.beginPath();
         this.context.moveTo(p1.x, p1.y);

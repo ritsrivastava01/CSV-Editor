@@ -19,7 +19,7 @@
     ]
   },
   "include": [
-    "main.ts",
+    "main_2.ts",
     "src/**/*"
   ],
   "exclude": [

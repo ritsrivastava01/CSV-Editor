@@ -1,32 +1,20 @@
-<mat-tab-group
-  (selectedTabChange)="tabChanged($event)"
-  (click)="tabChanged()"
-  [ngClass]="{ 'add-padding': isVisible }"
->
+<mat-tab-group (selectedTabChange)="tabChanged($event)" (click)="tabChanged($event)" [ngClass]="{ 'add-padding': isVisible }">
   <mat-tab label="{{ tab.fileName }}" *ngFor="let tab of fileList">
     {{ tab.fileName }}
     <ng-template matTabContent>
       <div class="div-options">
         <mat-form-field>
-          <input
-            matInput
-            (input)="onQuickFilterChanged($event.target.value)"
-            placeholder="Filter the CSV"
-          />
+          <input matInput (input)="onQuickFilterChanged($event.target.value)" placeholder="{{ 'scv-editor.text-placeholder' | translate }}" />
         </mat-form-field>
         <div class="div-buttons">
           <button mat-stroked-button color="primary" (click)="onSaveClicked()">
-            Save CSV
+            {{ "scv-editor.save" | translate }}
           </button>
-          <button
-            mat-stroked-button
-            color="primary"
-            (click)="onRemoveSelected()"
-          >
-            Remove Selected
+          <button mat-stroked-button color="primary" (click)="onRemoveSelected()">
+            {{ "scv-editor.remove-selected" | translate }}
           </button>
           <button mat-stroked-button color="primary" (click)="onAddRow()">
-            Add Row
+            {{ "scv-editor.add-row" | translate }}
           </button>
         </div>
       </div>
@@ -38,7 +26,7 @@
           [rowData]="tempDataRow | async"
           [stopEditingWhenGridLosesFocus]="true"
           [paginationPageSize]="20"
-          [columnDefs]="tempheaderRow | async"
+          [columnDefs]="headerRow | async"
           [pagination]="true"
           [rowDragManaged]="true"
           [animateRows]="true"

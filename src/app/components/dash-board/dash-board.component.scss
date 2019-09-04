@@ -1,0 +1,15 @@
+:host {
+  display: flex;
+  height: 100%;
+  width: 100%;
+
+  app-left-panel {
+    width: 35%;
+    background-color: #312450;
+  }
+
+  app-right-panel {
+    width: 100%;
+    background-color: #5e42a6;
+  }
+}

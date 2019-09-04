@@ -1,0 +1,36 @@
+<app-particles></app-particles>
+<div class="container">
+  <!--Welcome div-->
+  <div class="welcome" *ngIf="clickedNavigationItem?.id === 1">
+    <h1>{{ "page.right-panel.title" | translate }}</h1>
+    <span class="sub-text">{{ "page.right-panel.sub-title" | translate }}</span>
+    <button mat-stroked-button (click)="readMoreClicked()">
+      {{ "page.right-panel.read-more" | translate | uppercase }}
+    </button>
+    <img class="splitter" src="assets/images/line.png" />
+    <div class="file-list">
+      <div *ngFor="let file of recentFiles; let ind = index" (click)="loadFile(file)">
+        <img src="assets/images/csv-file.png" />
+        <div>
+          <span class="link">{{ file?.fileName }}</span>
+          <section>[{{ file?.filePath }}]</section>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Intro div-->
+  <div class="what-we-do" *ngIf="clickedNavigationItem?.id === 2">
+    <app-what-we-can-do></app-what-we-can-do>
+  </div>
+
+  <!--Drop Area div-->
+  <div class="upload-files-container" *ngIf="clickedNavigationItem?.id === 3">
+    <app-drop-area (OpenFileItemClicked)="openFileItemClickedHandler($event)"></app-drop-area>
+  </div>
+
+  <!--Contact us div-->
+  <div class="get-in-touch" *ngIf="clickedNavigationItem?.id === 4">
+    <app-contact-us></app-contact-us>
+  </div>
+</div>

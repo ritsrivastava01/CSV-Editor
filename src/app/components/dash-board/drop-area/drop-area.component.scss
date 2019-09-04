@@ -1,0 +1,78 @@
+// :host{
+
+//     .box {
+//         background-color: #eee;
+//         color: white;
+//         text-align: center;
+//         width: 80%;
+//         height: 70%;
+//         position: absolute;
+//         z-index: 1;
+//         left: 10%;
+//         top: 10%;
+//         color: gray;
+//         filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+
+//         mat-icon {
+//           float: right;
+//           background-color: #fff;
+//           margin: -15px;
+//           font-size: 35px;
+//           height: 35px;
+//           width: 35px;
+//           border-radius: 50px;
+//           cursor: pointer;
+//         }
+//         div {
+//           display: flex;
+//           justify-content: center;
+//           align-items: center;
+//           height: 100%;
+//           width: 100%;
+//           flex-direction: column;
+//           span {
+//             font-size: 12px;
+//             font-style: italic;
+//           }
+//         }
+//       }
+//       .csv-progress-bar{
+//         width: 70% !important;
+//         height: 10% !important;
+//       }
+//       .box-drag-over {
+//         //background-color: grey;
+//       }
+// }
+
+:host {
+  .upload-files {
+    background-color: #bdc3c724;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+
+    img {
+      width: 250px;
+      filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+    }
+
+    button {
+      margin: 10px 0 20px 0;
+      color: #fff;
+      border-color: #b496bc;
+      border-radius: 50px;
+      padding: 10px;
+      width: 150px;
+      filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+    }
+    span {
+      color: #b496bc;
+      filter: drop-shadow(12px 12px 7px rgba(0, 0, 0, 0.5));
+      margin: 0;
+    }
+  }
+}

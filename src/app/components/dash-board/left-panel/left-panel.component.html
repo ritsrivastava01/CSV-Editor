@@ -1,0 +1,7 @@
+<ul>
+  <li (click)="activateNavigationItem(navigationItem)" *ngFor="let navigationItem of navigationItemList" [ngClass]="{ active: navigationItem.isActive }">
+    <span>{{ navigationItem.label | translate | uppercase }}</span>
+    <img class="line-normal" src="assets/images/line_normal.png" />
+    <img class="line-hover" src="assets/images/line.png" />
+  </li>
+</ul>

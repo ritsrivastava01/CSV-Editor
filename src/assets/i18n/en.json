@@ -1,7 +1,49 @@
 {
-  "PAGES": {
-      "HOME": {
-          "TITLE": " Ritesh App works !"
-      }
+  "page": {
+    "right-panel": {
+      "title": "CSV Editor",
+      "sub-title": "Easy wat to edit CSVs",
+      "read-more": "Read More"
+    },
+    "left-panel": {
+      "welcome": "Welcome",
+      "what-we-do": "What We Do",
+      "upload-files": "Upload Files",
+      "get-in-touch": "Get In Touch"
+    },
+    "upload": {
+      "upload-files": "Upload Files",
+      "drag-text": "Or drag and drop the file here!",
+      "limit-text": "CSV Editor supports only 5 files maximum"
+    },
+    "intro": {
+      "great-design": "Great Design",
+      "introApp": "  This application comes with great looks for edit the CSV. You can find all recent files and use it again on just one click. It also support multilingual and theme.",
+      "handy-to-Edit": "Handy to Edit CSVs",
+      "easy-to-use-text1": " It also come with all feature provided by ",
+      "easy-to-use-text2": " under the community support. We can rearrange the column, apply sort on any column, apply the filter on the data, also, it supports to Edit/Remove/Add a new record as well.",
+      "easy-to-upload": "Easy to upload",
+      "easy-to-upload-text": "  CSV Editor can edit up to 5 files at the same. It also comes with drag and drops feature, you can easily drag and drop 5 files OR upload the same file by clicking the upload button."
+    },
+    "contact-us": {
+      "feedback": "Feedback",
+      "find-us": "Find Us"
+    }
+  },
+  "header": {
+    "upload-csv": "Upload CSV",
+    "github": "GitHub"
+  },
+  "scv-editor": {
+    "save": "Save CSV",
+    "remove-selected": "Remove Selected",
+    "add-row": "Add Row",
+    "text-placeholder": "Filter data on the CSV",
+    "save-as-window-title": "Save As",
+    "save-as-window-button-text": "Save CSV File",
+    "error-while-saving": "An error ocurred updating the file ",
+    "save-message": "The file has been saved successfully.",
+    "menu-save-as": "Save File As",
+    "reload": "Reload"
   }
 }

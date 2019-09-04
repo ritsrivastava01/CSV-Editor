@@ -1,0 +1,68 @@
+:host {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+
+  ul {
+    list-style: none;
+
+    margin: 0;
+    padding: 0 40px 0 40px;
+    width: 100%;
+
+    li {
+      margin-top: 20px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      color: #766f89;
+      flex-direction: column;
+      font-weight: bold;
+      padding-bottom: 10px;
+      align-items: flex-end;
+
+      span {
+        transition: margin-right ease 0.5s;
+      }
+
+      .line-normal {
+        margin-top: 15px;
+        height: 2px;
+        width: 100%;
+      }
+      .line-hover {
+        margin-top: 15px;
+        height: 2px;
+        width: 100%;
+        display: none;
+      }
+    }
+    & :hover {
+      color: #fff;
+      cursor: pointer;
+
+      span {
+        margin-right: 20px;
+      }
+      .line-normal {
+        display: none;
+      }
+      .line-hover {
+        display: block;
+      }
+    }
+    & .active {
+      color: #fff;
+      cursor: pointer;
+      span {
+        margin-right: 20px;
+      }
+      .line-normal {
+        display: none;
+      }
+      .line-hover {
+        display: block;
+      }
+    }
+  }
+}

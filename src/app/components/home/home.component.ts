@@ -1,9 +1,9 @@
 import { ConfirmationDialogComponent } from './../shared/confirmation-dialog/confirmation-dialog.component';
-import { EuListType } from './../dashboard/left-dashboard/left-dashboard.component';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FileService } from '../../providers/file.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
+import { EuListType } from '../dash-board/drop-area/drop-area.component';
 const remote = require('electron').remote;
 const { dialog } = require('electron').remote;
 
@@ -78,3 +78,4 @@ export class HomeComponent implements OnInit {
     }
   }
 }
+

@@ -26,9 +26,7 @@ export class FileService {
     dialog.showOpenDialog(
       {
         title: 'Select file',
-        properties: selectFolder
-          ? ['multiSelections', 'openFile']
-          : ['openFile'],
+        properties: selectFolder ? ['multiSelections', 'openFile'] : ['openFile'],
         filters: [{ name: 'Custom File Type', extensions: ['csv'] }]
       },
       filePaths => {
@@ -37,7 +35,7 @@ export class FileService {
           return;
         }
         if (filePaths.length > 5) {
-          alert('Only file files allowed!');
+          alert('CSV Editor can edit 5 files at a time!');
           return;
         }
         this.files = filePaths.map(x => {
@@ -60,9 +58,8 @@ export class FileService {
   private saveRecentFileListToLocalStogare = (fileList: Array<IFile>) => {
     // window.localStorage.removeItem('csv_editor_fileList');
 
-    const savedFiles = window.localStorage.getItem('csv_editor_fileList')
-      ? JSON.parse(window.localStorage.getItem('csv_editor_fileList'))
-      : [];
+    const savedFiles = window.localStorage.getItem('csv_editor_fileList') ?
+     JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
 
     const fileToSave = JSON.stringify(
       fileList
@@ -81,9 +78,7 @@ export class FileService {
   }
 
   getRecentSavedFiles = (): Array<IFile> => {
-    return window.localStorage.getItem('csv_editor_fileList')
-      ? JSON.parse(window.localStorage.getItem('csv_editor_fileList'))
-      : [];
+    return window.localStorage.getItem('csv_editor_fileList') ? JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
   }
   getBlankRow = () => {
     // TODO: Need to refactor
@@ -101,10 +96,7 @@ export class FileService {
       displayedColumns = [],
       tableArr = [];
     this.fileHeaders = [];
-    const file = this.electronService.fs.readFileSync(
-      fileObject.filePath,
-      'utf8'
-    );
+    const file = this.electronService.fs.readFileSync(fileObject.filePath, 'utf8');
     return new Observable((observer: Observer<IFile>) => {
       parse(file, {
         skipEmptyLines: true,

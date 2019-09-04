@@ -1,23 +1,13 @@
-import { map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 import { FileService, IFile } from './../../../../providers/file.service';
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  Input,
-  OnDestroy,
-  EventEmitter,
-  Output
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { MatTabChangeEvent } from '@angular/material';
 import { ElectronService } from '../../../../providers/electron.service';
 const remote = require('electron').remote;
 const { dialog } = require('electron').remote;
 const { Menu, MenuItem } = remote.require('electron');
-const csv = require('csv-parser');
 import { unparse } from 'papaparse';
-import { Observable, of } from 'rxjs';
-import * as $ from 'jquery';
+import { Observable, of, forkJoin } from 'rxjs';
 import { CellValueChangedEvent } from 'ag-grid-community';
 
 let WIN;
@@ -41,29 +31,22 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
   delimiter: string;
   IsEdited = false;
   tempDataRow: Observable<Array<any>>;
-  tempheaderRow: Observable<Array<any>>;
+  headerRow: Observable<Array<any>>;
   @Output() isGridEdited: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private gridApi;
-  private gridColumnApi;
-  private rowSelection = 'multiple';
 
   dummyFile: IFile = {
     fileName: undefined,
     fileData: undefined
   };
 
-  constructor(
-    private electronService: ElectronService,
-    private changeDetectorRef: ChangeDetectorRef,
-    private fileService: FileService
-  ) {}
+  constructor(private electronService: ElectronService, private changeDetectorRef: ChangeDetectorRef, private fileService: FileService, private translate: TranslateService) {}
 
   isVisible = false;
 
   onGridReady(params) {
     this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
     params.api.sizeColumnsToFit();
     this.IsEdited = false;
     this.isGridEdited.emit(false);
@@ -77,6 +60,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
 
   getRowData() {
     const rowData = [];
+
     this.gridApi.forEachNode(function(node) {
       rowData.push(node.data);
     });
@@ -84,7 +68,6 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
 
   onRemoveSelected() {
     const selectedData = this.gridApi.getSelectedRows();
-    const res = this.gridApi.updateRowData({ remove: selectedData });
     this.IsEdited = true;
     this.isGridEdited.emit(this.IsEdited);
   }
@@ -99,14 +82,14 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     WIN = remote.getCurrentWindow();
 
     this.fileService.selectedFiles.subscribe(x => {
-      this.tempheaderRow = of([]);
+      this.headerRow = of([]);
       this.tempDataRow = of([]);
 
       this.fileList = x;
       if (this.fileList.length > 0) {
         this.fileService.loadDataFromCSV(this.fileList[0]);
         if (!this.fileList[0].fileData) {
-          this.laodData(this.fileList[0]);
+          this.loadCSVFile(this.fileList[0]);
           this.isVisible = true;
         }
       } else {
@@ -115,22 +98,21 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
       this.changeDetectorRef.detectChanges();
     });
 
-    this.dateFiledSet.add('Agreement datum');
-    this.dateFiledSet.add('Ingangsdatum');
-    this.dateFiledSet.add('Inactivatie datum');
-    this.dateFiledSet.add('Datum afsluiten agreement');
-    this.dateFiledSet.add('Inactivatie datum -optioneel-');
-    this.dateFiledSet.add('NID');
-
     this.createContextMenu();
 
-    this.electronService.ipcRenderer.on('saveFile', arg => {
-      this.getRowData();
-      this.saveFile();
+    this.electronService.ipcRenderer.on('saveFile', () => {
+      if (this.fileList.length !== 0) {
+        this.getRowData();
+        this.saveFile();
+      }
+    });
+    this.electronService.ipcRenderer.on('uploadFile', () => {
+      this.fileService.showDialog();
     });
 
-    this.electronService.ipcRenderer.on('reloadFile', arg => {
-      this.laodData(this.currentFile);
+    this.electronService.ipcRenderer.on('reloadFile', () => {
+      // tslint:disable-next-line: no-unused-expression
+      this.currentFile && this.loadCSVFile(this.currentFile);
     });
   }
   ngOnDestroy() {}
@@ -151,12 +133,12 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
   }
   tabChanged(tabChange: MatTabChangeEvent) {
     if (tabChange !== undefined && tabChange.index >= 0) {
-      const selctedFile = this.fileList[tabChange.index];
-      if (!selctedFile.fileData) {
+      const selectedFile = this.fileList[tabChange.index];
+      if (!selectedFile.fileData) {
         // this.setCsvData(this.dummyFile);
-        this.laodData(selctedFile);
+        this.loadCSVFile(selectedFile);
       } else {
-        this.setCsvData(selctedFile);
+        this.setCsvData(selectedFile);
       }
     }
   }
@@ -165,7 +147,6 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     this.dataSource = updateFile.fileData;
     this.displayedColumns = updateFile.fileHeader;
     this.columnNames = updateFile.columnName;
-    // this.dataSource.paginator = this.paginator;
     setTimeout(() => {
       this.generateDataForAgGrid(updateFile);
     }, 500);
@@ -174,7 +155,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
   }
 
   generateDataForAgGrid = (file: IFile) => {
-    this.tempheaderRow = of(
+    this.headerRow = of(
       file.fileHeader.map((x, index) => {
         // TODO: improve the approach
         let obj = new Object();
@@ -187,7 +168,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
           resizable: true
         };
         if (index === 0) {
-          obj['resizabl'] = false;
+          obj['resizable'] = false;
           obj['editable'] = false;
           obj['headerCheckboxSelection'] = true;
           obj['headerCheckboxSelectionFilteredOnly'] = true;
@@ -200,7 +181,7 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     this.tempDataRow = of(file.fileData);
   }
 
-  laodData(file: IFile) {
+  loadCSVFile = (file: IFile) => {
     this.fileService.loadDataFromCSV(file).subscribe((updateFile: IFile) => {
       this.currentFile = updateFile;
       file = updateFile;
@@ -208,20 +189,24 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
     });
   }
 
-  showDateField = (filedName): boolean => {
-    return this.dateFiledSet.has(filedName);
-  }
+  // showDateField = (filedName): boolean => {
+  //   return this.dateFiledSet.has(filedName);
+  // }
 
   saveFile = () => {
+    let title, buttonText;
+    this.translate.get('scv-editor.save-as-window-title').subscribe(x => (title = x));
+    this.translate.get('scv-editor.save-as-window-button-text').subscribe(x => (buttonText = x));
+
     const options = {
       // Placeholder 1
-      title: 'Save As',
+      title: title,
 
       // Placeholder 2
       defaultPath: this.currentFile.filePath,
 
       // Placeholder 4
-      buttonLabel: 'Save CSV File',
+      buttonLabel: buttonText,
 
       // Placeholder 3
       filters: [{ name: 'csv File', extensions: ['csv'] }]
@@ -233,68 +218,54 @@ export class CsvLayoutComponent implements OnInit, OnDestroy {
 
     this.electronService.fs.writeFile(fileName, csvData, err => {
       if (err) {
-        alert('An error ocurred updating the file' + err.message);
+        this.translate.get('scv-editor.error-while-saving').subscribe(x => alert(x + err.message));
         return;
       }
       this.IsEdited = false;
       this.isGridEdited.emit(false);
-      alert('The file has been saved succesfully.');
+      console.log(fileName, csvData);
+      this.translate.get('scv-editor.save-message').subscribe(x => {
+        alert(x);
+        const file: IFile = {
+          fileName: fileName.replace(/^.*[\\\/]/, ''),
+          filePath: fileName
+        };
+        const currentFileIndex = this.fileList.findIndex(objFile => objFile.fileName === this.currentFile.fileName);
+        this.fileList[currentFileIndex] = file;
+        this.fileService.loadFilesInApplication(this.fileList);
+      });
     });
   }
 
   createContextMenu = () => {
-    // Build menu one item at a time, unlike
-    this.menu.append(
-      new MenuItem({
-        label: 'Save File As',
-        click() {
-          WIN.webContents.send('saveFile', 'save-file');
-        }
-      })
-    );
+    forkJoin(this.translate.get('scv-editor.menu-save-as'), this.translate.get('scv-editor.reload')).subscribe(x => {
+      this.menu.append(
+        new MenuItem({
+          label: x[0],
+          click() {
+            WIN.webContents.send('saveFile', 'save-file');
+          }
+        })
+      );
 
-    this.menu.append(new MenuItem({ type: 'separator' }));
-    this.menu.append(
-      new MenuItem({
-        label: 'Reload',
-        click() {
-          WIN.webContents.send('reloadFile', 'reload-file');
-        }
-      })
-    );
+      this.menu.append(new MenuItem({ type: 'separator' }));
+      this.menu.append(
+        new MenuItem({
+          label: x[1],
+          click() {
+            WIN.webContents.send('reloadFile', 'reload-file');
+          }
+        })
+      );
 
-    // Prevent default action of right click in chromium. Replace with our menu.
-    window.addEventListener(
-      'contextmenu',
-      e => {
-        e.preventDefault();
-        this.menu.popup(this.electronService.remote.getCurrentWindow());
-      },
-      false
-    );
+      window.addEventListener(
+        'contextmenu',
+        e => {
+          e.preventDefault();
+          this.menu.popup(this.electronService.remote.getCurrentWindow());
+        },
+        false
+      );
+    });
   }
-}
-
-function getDatePicker() {
-  function Datepicker() {}
-  Datepicker.prototype.init = function(params) {
-    this.eInput = document.createElement('input');
-    this.eInput.value = params.value;
-    $(this.eInput).datepicker({ dateFormat: 'dd/mm/yy' });
-  };
-  Datepicker.prototype.getGui = function() {
-    return this.eInput;
-  };
-  Datepicker.prototype.afterGuiAttached = function() {
-    this.eInput.focus();
-    this.eInput.select();
-  };
-  Datepicker.prototype.getValue = function() {
-    return this.eInput.value;
-  };
-  Datepicker.prototype.destroy = function() {};
-  Datepicker.prototype.isPopup = function() {
-    return false;
-  };
-  return Datepicker;
 }

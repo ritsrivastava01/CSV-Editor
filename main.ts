@@ -1,11 +1,4 @@
-import {
-  app,
-  BrowserWindow,
-  screen,
-  Menu,
-  globalShortcut,
-  MenuItem
-} from 'electron';
+import { app, BrowserWindow, screen, Menu, globalShortcut, MenuItem } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 const shell = require('electron').shell;
@@ -31,7 +24,7 @@ function createWindow() {
     y: 0,
     width: size.width - 200,
     height: size.height - 200,
-    icon: __dirname + 'assets/icons/win/64x64.png',
+    // icon: `file://${__dirname}/dist/assets/icons/png/64x64.png`,
     webPreferences: {
       nodeIntegration: true
     }
@@ -104,9 +97,20 @@ function createMenu() {
     {
       label: 'Menu',
       submenu: [
-        { label: 'Upload CSV', accelerator: 'CmdOrCtrl+Shift+U' },
-        { label: 'Save All', accelerator: 'CmdOrCtrl+Shift+S' },
-        { label: 'Save', accelerator: 'CmdOrCtrl+S' },
+        {
+          label: 'Open CSV',
+          accelerator: 'CmdOrCtrl+O',
+          click() {
+            win.webContents.send('uploadFile', 'upload-file');
+          }
+        },
+        {
+          label: 'Save',
+          accelerator: 'CmdOrCtrl+S',
+          click() {
+            win.webContents.send('saveFile', 'save-file');
+          }
+        },
         { type: 'separator' },
         {
           label: 'Exit',
@@ -116,9 +120,9 @@ function createMenu() {
           }
         },
         {
-          label: 'GitHub',
+          label: 'Find more',
           click() {
-            shell.openExternal('http://google.com');
+            shell.openExternal('https://github.com/ritsrivastava01/CSV-Editor');
           }
         }
       ]
