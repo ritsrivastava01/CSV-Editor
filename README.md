@@ -1,18 +1,19 @@
-<p align="center">
+# CSV Editor
+
 <img  width="100" height="100"  src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/favicon.512x512.png" /></p>
 
-# Introduction
+## Introduction
 
 This CSV Editor is desktop application and used to edit the CSV files.
 This editor supports edit 5 file at the same time and comes up with many features.
 
-# Currently this installer available for:
+## Currently this installer available for:
 
 - Windows
 - Mac
 - Linux
 
-# With this application, you can :
+## With this application, you can :
 
 - Install on Windows/Mac OR Linux
 - Application comes with awesome look and feel.
@@ -22,31 +23,31 @@ This editor supports edit 5 file at the same time and comes up with many feature
 - Can drag and drop up to 5 files in the application
 - 2 Theme support.
 
-# Some screenshots:
+## Some screenshots:
 
 <p align="center">
 <img  width="500"   src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/assets/app-images/home.PNG" />
   
 </p>
-<p align="center">*Home Screen*</p>
+<p align="center">Home Screen</p>
 
 <p align="center">
 <img  width="500"   src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/assets/app-images/multiple_file.PNG" />
   
 </p>
-<p align="center">*Edit Screen*</p>
+<p align="center">Edit Screen</p>
 
 <p align="center">
 <img  width="500"   src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/assets/app-images/upload.PNG" />
   
 </p>
-<p align="center">*Upload Screen*</p>
+<p align="center">Upload Screen</p>
 
 <p align="center">
 <img  width="500"   src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/assets/app-images/getInTouch.PNG" />
   
 </p>
-<p align="center">*Get In Touch*</p>
+<p align="center">Get In Touch</p>
 
 # Help
 
@@ -57,7 +58,7 @@ Many thanks to
 
 # Development Help:
 
-Pull request always welcome to improve the application and pls share the feedback for mac and Linux application as I don't have those :)
+Pull request always welcome to improve the application and pls share the feedback for mac and Linux platform views as I don't have those :)
 
 ## Getting Started
 
