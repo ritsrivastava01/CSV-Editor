@@ -1,3 +1,4 @@
+import { LanguageService, ILanguage } from './../../../providers/language.service';
 import { INavigationItem, LeftNavigationService } from './../services/left-navigation.service';
 import { EuListType } from './../drop-area/drop-area.component';
 import { FileService, IFile } from './../../../providers/file.service';
@@ -13,8 +14,9 @@ export class RightPanelComponent implements OnInit {
 
   @Output() openFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
   recentFiles: Array<IFile> = [];
-
-  constructor(private fileService: FileService, private leftNavService: LeftNavigationService) {
+  languages: Array<ILanguage> = [];
+  selectedLanguage: ILanguage;
+  constructor(private fileService: FileService, private leftNavService: LeftNavigationService, private languageService: LanguageService) {
     this.leftNavService.activeNavigationItemObservable.subscribe(x => {
       this.clickedNavigationItem = x;
     });
@@ -22,6 +24,11 @@ export class RightPanelComponent implements OnInit {
 
   ngOnInit() {
     this.recentFiles = this.fileService.getRecentSavedFiles();
+    this.languages = this.languageService.languages;
+    this.languageService.selectedLanguage.subscribe(x => {
+      console.log(x);
+      this.selectedLanguage = x;
+    });
   }
   readMoreClicked = () => {
     this.leftNavService.LeftNavigationClicked(this.leftNavService.navigationItems.find(x => x.id === 2));
@@ -32,5 +39,13 @@ export class RightPanelComponent implements OnInit {
   }
   openFileItemClickedHandler = (evt: EuListType) => {
     this.openFileItemClicked.emit(evt);
+  }
+
+  /**
+   * language change handler
+   * @param  {ILanguage} item
+   */
+  changeLanguage = (language: ILanguage) => {
+    this.languageService.changeLanguage(language);
   }
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { LanguageService } from './providers/language.service';
+import { Component, OnInit } from '@angular/core';
 import { ElectronService } from './providers/electron.service';
 import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../environments/environment';
@@ -8,11 +9,8 @@ import { AppConfig } from '../environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  constructor(public electronService: ElectronService,
-    private translate: TranslateService) {
-
-    translate.setDefaultLang('en');
+export class AppComponent implements OnInit {
+  constructor(public electronService: ElectronService, private translate: TranslateService, private languageService: LanguageService) {
     console.log('AppConfig', AppConfig);
 
     if (electronService.isElectron()) {
@@ -22,5 +20,9 @@ export class AppComponent {
     } else {
       console.log('Mode web');
     }
+  }
+
+  ngOnInit() {
+    this.languageService.loadDefaultLanguage();
   }
 }

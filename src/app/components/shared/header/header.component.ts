@@ -1,6 +1,9 @@
+import { LanguageService, ILanguage } from './../../../providers/language.service';
+
 import { FileService } from './../../../providers/file.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Observable } from 'rxjs';
 const shell = require('electron').shell;
 
 @Component({
@@ -10,14 +13,16 @@ const shell = require('electron').shell;
 })
 export class HeaderComponent implements OnInit {
   languages: Array<ILanguage> = [];
-  selectedLanguage = 'English';
+  selectedLanguage: ILanguage;
   @Output() goToHomeClicked = new EventEmitter();
 
-  constructor(private translateService: TranslateService, private fileService: FileService) {}
+  constructor(private translateService: TranslateService, private fileService: FileService, private languageService: LanguageService) {}
 
   ngOnInit() {
-    this.languages.push(<ILanguage>{ name: 'English', code: 'en' });
-    this.languages.push(<ILanguage>{ name: 'Dutch', code: 'nl' });
+    this.languages = this.languageService.languages;
+    this.languageService.selectedLanguage.subscribe(x => {
+      this.selectedLanguage = x;
+    });
   }
   openURL() {
     shell.openExternal('https://github.com/ritsrivastava01/CSV-Editor');
@@ -27,9 +32,8 @@ export class HeaderComponent implements OnInit {
    * language change handler
    * @param  {ILanguage} item
    */
-  changeLanguage = (item: ILanguage) => {
-    this.selectedLanguage = item.name;
-    this.translateService.use(item.code);
+  changeLanguage = (language: ILanguage) => {
+    this.languageService.changeLanguage(language);
   }
 
   clicked = () => {
@@ -38,9 +42,4 @@ export class HeaderComponent implements OnInit {
   uploadCsvClicked = () => {
     this.fileService.showDialog();
   }
-}
-
-export interface ILanguage {
-  name: string;
-  code: string;
 }

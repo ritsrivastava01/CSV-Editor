@@ -50,16 +50,15 @@ export class FileService {
   }
 
   loadFilesInApplication = (files: Array<IFile>) => {
-    this.saveRecentFileListToLocalStogare(files);
+    this.saveRecentFileListToLocalStorage(files);
 
     this.selectedFiles.next(files);
   }
 
-  private saveRecentFileListToLocalStogare = (fileList: Array<IFile>) => {
+  private saveRecentFileListToLocalStorage = (fileList: Array<IFile>) => {
     // window.localStorage.removeItem('csv_editor_fileList');
 
-    const savedFiles = window.localStorage.getItem('csv_editor_fileList') ?
-     JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
+    const savedFiles = window.localStorage.getItem('csv_editor_fileList') ? JSON.parse(window.localStorage.getItem('csv_editor_fileList')) : [];
 
     const fileToSave = JSON.stringify(
       fileList
