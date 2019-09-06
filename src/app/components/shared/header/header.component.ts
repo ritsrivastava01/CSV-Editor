@@ -1,15 +1,14 @@
 import { LanguageService, ILanguage } from './../../../providers/language.service';
-
 import { FileService } from './../../../providers/file.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
 const shell = require('electron').shell;
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HeaderComponent implements OnInit {
   languages: Array<ILanguage> = [];
@@ -24,6 +23,12 @@ export class HeaderComponent implements OnInit {
       this.selectedLanguage = x;
     });
   }
+
+  /**
+   *Open the github URL
+   *
+   * @memberof HeaderComponent
+   */
   openURL() {
     shell.openExternal('https://github.com/ritsrivastava01/CSV-Editor');
   }
@@ -36,10 +41,17 @@ export class HeaderComponent implements OnInit {
     this.languageService.changeLanguage(language);
   }
 
-  clicked = () => {
-    this.goToHomeClicked.emit();
-  }
-  uploadCsvClicked = () => {
-    this.fileService.showDialog();
-  }
+  /**
+   *HomeClick handler navigate to home
+   *
+   * @memberof HeaderComponent
+   */
+  homeClicked = () => this.goToHomeClicked.emit();
+
+  /**
+   *Used to open the select file dialog
+   *
+   * @memberof HeaderComponent
+   */
+  uploadCsvClicked = () => this.fileService.showDialog();
 }

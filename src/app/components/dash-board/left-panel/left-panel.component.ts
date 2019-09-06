@@ -1,12 +1,12 @@
 import { INavigationItem, LeftNavigationService } from './../services/left-navigation.service';
 
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-left-panel',
   templateUrl: './left-panel.component.html',
-  styleUrls: ['./left-panel.component.scss']
+  styleUrls: ['./left-panel.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LeftPanelComponent {
   navigationItemList: INavigationItem[] = [];
@@ -19,7 +19,12 @@ export class LeftPanelComponent {
     this.leftNavService.LeftNavigationClicked(this.leftNavService.navigationItems[0]);
   }
 
-  activateNavigationItem = (navigationItem: INavigationItem) => {
+  /**
+   *Click handler for navigation
+   *
+   * @memberof LeftPanelComponent
+   */
+  clickItem = (navigationItem: INavigationItem) => {
     this.leftNavService.LeftNavigationClicked(navigationItem);
   }
 }

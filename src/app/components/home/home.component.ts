@@ -4,8 +4,6 @@ import { FileService } from '../../providers/file.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { EuListType } from '../dash-board/drop-area/drop-area.component';
-const remote = require('electron').remote;
-const { dialog } = require('electron').remote;
 
 @Component({
   selector: 'app-home',
@@ -16,12 +14,7 @@ export class HomeComponent implements OnInit {
   showDragNDropArea = false;
   showCsvEditor = false;
   isCSVEdited = false;
-  constructor(
-    private fileService: FileService,
-    private router: Router,
-    private changeDetectionRef: ChangeDetectorRef,
-    public matDialog: MatDialog
-  ) {}
+  constructor(private fileService: FileService, private changeDetectionRef: ChangeDetectorRef, public matDialog: MatDialog) {}
 
   ngOnInit() {
     this.fileService.selectedFiles.subscribe(x => {
@@ -30,9 +23,16 @@ export class HomeComponent implements OnInit {
       this.changeDetectionRef.detectChanges();
     });
   }
+
   cancelClickedHandler = (evt: any) => {
     this.showDragNDropArea = evt.data;
   }
+
+  /**
+   *
+   * Show the home page if nothing editing
+   * @memberof HomeComponent
+   */
   loadHomePage = () => {
     if (!this.isCSVEdited) {
       this.showCsvEditor = false;
@@ -44,6 +44,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  /**
+   * show thew popup if something is edited in csv file
+   *
+   * @memberof HomeComponent
+   */
   openDialog(): void {
     if (this.isCSVEdited) {
       const dialogRef = this.matDialog.open(ConfirmationDialogComponent, {
@@ -60,22 +65,13 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  gridEdited(evt: any) {
+  /**
+   *set if csv OR grid edited
+   *
+   * @param {*} evt
+   * @memberof HomeComponent
+   */
+  csvEditedHandler(evt: any) {
     this.isCSVEdited = evt;
   }
-
-  leftListItemClickedHandler = (evt: EuListType) => {
-    switch (evt) {
-      case EuListType.OPEN_FILE:
-        this.fileService.showDialog(false);
-        break;
-      case EuListType.OPEN_FOLDER:
-        this.fileService.showDialog(true);
-        break;
-      case EuListType.DRAG_AND_DROP:
-        this.showDragNDropArea = true;
-        break;
-    }
-  }
 }
-

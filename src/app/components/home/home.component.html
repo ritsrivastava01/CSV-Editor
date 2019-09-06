@@ -2,7 +2,7 @@
   <app-header (goToHomeClicked)="loadHomePage()" *ngIf="showCsvEditor"></app-header>
 
   <div class="app-container">
-    <app-dash-board *ngIf="!showCsvEditor" (openFileItemClicked)="leftListItemClickedHandler($event)"></app-dash-board>
-    <app-csv [ngClass]="{ 'display-full': showCsvEditor }" (cancelClicked)="cancelClickedHandler($event)" (gridEdited)="gridEdited($event)"></app-csv>
+    <app-dash-board *ngIf="!showCsvEditor"></app-dash-board>
+    <app-csv [ngClass]="{ 'display-full': showCsvEditor }" (cancelClicked)="cancelClickedHandler($event)" (gridEdited)="csvEditedHandler($event)"></app-csv>
   </div>
 </div>

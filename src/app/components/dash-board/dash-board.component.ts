@@ -1,16 +1,11 @@
-import { EuListType } from './drop-area/drop-area.component';
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-dash-board',
   templateUrl: './dash-board.component.html',
-  styleUrls: ['./dash-board.component.scss']
+  styleUrls: ['./dash-board.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashBoardComponent {
-  @Output() openFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
   constructor() {}
-
-  openFileItemClickedHandler = (evt: EuListType) => {
-    this.openFileItemClicked.emit(evt);
-  }
 }

@@ -1,3 +1,4 @@
+// NOT IN USE
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
   settingClicked = false;
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

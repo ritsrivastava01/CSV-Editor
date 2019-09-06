@@ -35,7 +35,6 @@ import { SharedModule } from './components/shared/shared.module';
 import { DashBoardNewModule } from './components/dash-board/dash-board.module';
 import { LanguageService } from './providers/language.service';
 
-// AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }

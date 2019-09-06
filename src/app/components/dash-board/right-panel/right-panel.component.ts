@@ -16,6 +16,7 @@ export class RightPanelComponent implements OnInit {
   recentFiles: Array<IFile> = [];
   languages: Array<ILanguage> = [];
   selectedLanguage: ILanguage;
+
   constructor(private fileService: FileService, private leftNavService: LeftNavigationService, private languageService: LanguageService) {
     this.leftNavService.activeNavigationItemObservable.subscribe(x => {
       this.clickedNavigationItem = x;
@@ -30,22 +31,26 @@ export class RightPanelComponent implements OnInit {
       this.selectedLanguage = x;
     });
   }
+
+  /**
+   * Click handler for 'read more'
+   *
+   * @memberof RightPanelComponent
+   */
   readMoreClicked = () => {
     this.leftNavService.LeftNavigationClicked(this.leftNavService.navigationItems.find(x => x.id === 2));
   }
 
-  loadFile(file: IFile) {
-    this.fileService.loadFilesInApplication([file]);
-  }
-  openFileItemClickedHandler = (evt: EuListType) => {
-    this.openFileItemClicked.emit(evt);
-  }
+  /**
+   *Load file in application
+   *
+   * @memberof RightPanelComponent
+   */
+  loadFile = (file: IFile) => this.fileService.loadFilesInApplication([file]);
 
   /**
    * language change handler
    * @param  {ILanguage} item
    */
-  changeLanguage = (language: ILanguage) => {
-    this.languageService.changeLanguage(language);
-  }
+  changeLanguage = (language: ILanguage) => this.languageService.changeLanguage(language);
 }

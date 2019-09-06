@@ -1,8 +1,7 @@
 import { IFile, FileService } from './../../../providers/file.service';
-
-import { Component, OnInit, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
-
+import { Component, OnInit, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
 import * as path from 'path';
+
 export enum EuListType {
   OPEN_FOLDER = 'openFile',
   OPEN_FILE = 'multiSelections',
@@ -12,24 +11,41 @@ export enum EuListType {
 @Component({
   selector: 'app-drop-area',
   templateUrl: './drop-area.component.html',
-  styleUrls: ['./drop-area.component.scss']
+  styleUrls: ['./drop-area.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DropAreaComponent implements OnInit {
-  @Output() OpenFileItemClicked: EventEmitter<EuListType> = new EventEmitter();
   eListType = EuListType;
 
   files: Array<IFile> = [];
   value = 20;
   constructor(private changeDetectorRef: ChangeDetectorRef, private fileService: FileService) {}
 
-  buttonClickedHandler = (eve: EuListType) => {
-    this.OpenFileItemClicked.emit(eve);
-  }
-
   ngOnInit() {
     this.fileDropped();
   }
 
+  /**
+   * Open the upload file popup
+   *
+   * @memberof DropAreaComponent
+   */
+  uploadButtonClickedHandler = (eve: EuListType) => {
+    switch (eve) {
+      case EuListType.OPEN_FILE:
+        this.fileService.showDialog(false);
+        break;
+      case EuListType.OPEN_FOLDER:
+        this.fileService.showDialog(true);
+        break;
+    }
+  }
+
+  /**
+   *File Dropped handler
+   *
+   * @memberof DropAreaComponent
+   */
   fileDropped = () => {
     const holder = document.getElementById('drag-file');
     holder.ondragover = (e: any) => {
@@ -41,11 +57,6 @@ export class DropAreaComponent implements OnInit {
       e.target.classList.remove('box-drag-over');
       return false;
     };
-
-    // holder.addEventListener('dragenter', function(event) {
-    //     event.target.style.border = '3px dotted red';
-    // });
-
     holder.ondragend = () => {
       return false;
     };

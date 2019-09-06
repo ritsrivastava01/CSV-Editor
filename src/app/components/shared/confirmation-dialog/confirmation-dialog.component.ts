@@ -1,17 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-confirmation-dialog',
   templateUrl: './confirmation-dialog.component.html',
-  styleUrls: ['./confirmation-dialog.component.scss']
+  styleUrls: ['./confirmation-dialog.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfirmationDialogComponent {
+  constructor(public dialogRef: MatDialogRef<ConfirmationDialogComponent>, @Inject(MAT_DIALOG_DATA) public message: string) {}
 
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public message: string) { }
-onNoClick(): void {
+  onNoClick(): void {
     this.dialogRef.close();
   }
 }

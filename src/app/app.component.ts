@@ -10,6 +10,7 @@ import { AppConfig } from '../environments/environment';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  
   constructor(public electronService: ElectronService, private translate: TranslateService, private languageService: LanguageService) {
     console.log('AppConfig', AppConfig);
 
@@ -22,6 +23,11 @@ export class AppComponent implements OnInit {
     }
   }
 
+  /**
+   *ng init function
+   *
+   * @memberof AppComponent
+   */
   ngOnInit() {
     this.languageService.loadDefaultLanguage();
   }

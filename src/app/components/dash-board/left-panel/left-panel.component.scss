@@ -5,7 +5,6 @@
 
   ul {
     list-style: none;
-
     margin: 0;
     padding: 0 40px 0 40px;
     width: 100%;
@@ -30,6 +29,7 @@
         height: 2px;
         width: 100%;
       }
+
       .line-hover {
         margin-top: 15px;
         height: 2px;
@@ -44,9 +44,11 @@
       span {
         margin-right: 20px;
       }
+
       .line-normal {
         display: none;
       }
+
       .line-hover {
         display: block;
       }
@@ -54,12 +56,15 @@
     & .active {
       color: #fff;
       cursor: pointer;
+
       span {
         margin-right: 20px;
       }
+
       .line-normal {
         display: none;
       }
+
       .line-hover {
         display: block;
       }
