@@ -1,5 +1,5 @@
 # CSV Editor
-
+<p align="center">
 <img  width="100" height="100"  src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/favicon.512x512.png" /></p>
 
 ## Introduction
@@ -28,7 +28,7 @@ This editor supports edit 5 file at the same time and comes up with many feature
 <p align="center">
 <img  width="500"   src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/assets/app-images/home.PNG" />
   
-</p>
+<p align="center">
 <p align="center">Home Screen</p>
 
 <p align="center">
