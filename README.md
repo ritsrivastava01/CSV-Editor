@@ -28,7 +28,7 @@ Please give CSV-Editor a :star:
 
 ## Some screenshots:
 <p align="center">
-<img  width="500"   src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/assets/app-images/home.PNG" />
+<img  width="500" style="filter: drop-shadow(0px 0px 7px rgba(0, 0, 0, 0.5));}"   src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/assets/app-images/home.PNG" />
   
 <p align="center">
 <p align="center">Home Screen</p>
