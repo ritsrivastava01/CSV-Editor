@@ -16,11 +16,11 @@ This editor has a nice look and feel and supports editing 5 files at a time and 
 
 ## This editor supports :
 - Installation on Windows/Mac or Linux platform.
-- Editor has awesome look and feel.
-- Very handy way to edit up to 5 CSV at a time.
+- The editor has awesome look and feel.
+- A very handy way to edit up to 5 CSV at a time.
 - Multilingual support (now available in English and Dutch only)
 - Shows the recently used files on home page
-- Supports drag and drop of upto 5 files on the editor.
+- Supports drag and drop of up-to 5 files on the editor.
 - 2 Theme support.
 
 ## Support
