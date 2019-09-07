@@ -6,26 +6,27 @@
 </p>
 
 This CSV Editor is desktop application and used to edit the CSV files.
-This editor comes with nice look and feel and supports edit 5 files at a time and comes up with many cool features.
+This editor has a nice look and feel and supports editing 5 files at a time and has many cool features.
 
-## Currently this installer available for:
+## Currently this installer is available for:
 
 - Windows
 - Mac (will come soon)
 - Linux
 
-## With this application, you can :
-
-- Install on Windows/Mac OR Linux
-- Application comes with awesome look and feel.
-- Vet handy way to edit up to 5 CSV at same same
-- Multilingual support (now available in English and Dutch only )
-- Show the recently used file on home page
-- Can drag and drop up to 5 files in the application
+## THis editor supports :
+- Installation on Windows/Mac or Linux platform.
+- Editor has awesome look and feel.
+- Very handy way to edit up to 5 CSV at a time.
+- Multilingual support (now available in English and Dutch only)
+- Shows the recently used files on home page
+- Supports drag and drop of upto 5 files on the editor.
 - 2 Theme support.
 
-## Some screenshots:
+## Support
+Please give CSV-Editor a :star:
 
+## Some screenshots:
 <p align="center">
 <img  width="500"   src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/assets/app-images/home.PNG" />
   
@@ -50,7 +51,8 @@ This editor comes with nice look and feel and supports edit 5 files at a time an
 </p>
 <p align="center">Get In Touch</p>
 
-# Help
+
+# Credits
 
 Many thanks to
 
@@ -59,8 +61,8 @@ Many thanks to
 
 # Development Help:
 
-Pull request always welcome to improve the application and pls share the feedback for mac and Linux platform views as I don't have those :)
+Pull requests are always welcome for the improvement of the application. Please share the feedback for mac and Linux platform views as I don't have those :)
 
-## Getting Started
+## Installer
 
 Download latest installer [here](https://github.com/ritsrivastava01/CSV-Editor/releases)
