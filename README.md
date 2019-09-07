@@ -5,9 +5,6 @@
   <h1 align="center">CSV Editor</h1>
 </p>
 
-
-## Introduction
-
 This CSV Editor is desktop application and used to edit the CSV files.
 This editor comes with nice look and feel and supports edit 5 files at a time and comes up with many cool features.
 
