@@ -10,7 +10,7 @@ This editor supports edit 5 file at the same time and comes up with many feature
 ## Currently this installer available for:
 
 - Windows
-- Mac
+- Mac (will come soon)
 - Linux
 
 ## With this application, you can :
@@ -53,7 +53,7 @@ This editor supports edit 5 file at the same time and comes up with many feature
 
 Many thanks to
 
-1. Maxime GRIS for creating nice boilerplate for [angualr with electron](https://github.com/maximegris/angular-electron)
+1. Maxime GRIS for creating nice boilerplate for [angular with electron](https://github.com/maximegris/angular-electron)
 2. [ag-grid](https://www.ag-grid.com/) for providing the excel layout.
 
 # Development Help:
