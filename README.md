@@ -14,7 +14,7 @@ This editor has a nice look and feel and supports editing 5 files at a time and 
 - Mac (will come soon)
 - Linux
 
-## THis editor supports :
+## This editor supports :
 - Installation on Windows/Mac or Linux platform.
 - Editor has awesome look and feel.
 - Very handy way to edit up to 5 CSV at a time.
@@ -56,7 +56,7 @@ Please give CSV-Editor a :star:
 
 Many thanks to
 
-1. Maxime GRIS for creating nice boilerplate for [angular with electron](https://github.com/maximegris/angular-electron)
+1. Maxime Gris for creating nice boilerplate for [angular with electron](https://github.com/maximegris/angular-electron)
 2. [ag-grid](https://www.ag-grid.com/) for providing the excel layout.
 
 # Development Help:
