@@ -1,11 +1,15 @@
-# CSV Editor
+
+
 <p align="center">
-<img  width="100" height="100"  src ="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/favicon.512x512.png" /></p>
+  <img height="200px" width="200px" style="text-align: center;" src="https://github.com/ritsrivastava01/CSV-Editor/blob/master/src/favicon.512x512.png">
+  <h1 align="center">CSV Editor</h1>
+</p>
+
 
 ## Introduction
 
 This CSV Editor is desktop application and used to edit the CSV files.
-This editor supports edit 5 file at the same time and comes up with many features.
+This editor comes with nice look and feel and supports edit 5 files at a time and comes up with many cool features.
 
 ## Currently this installer available for:
 
